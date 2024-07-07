@@ -1,21 +1,31 @@
 <script lang="ts">
-  import socket from "$lib/socket";
+  import { realtime } from "$lib/ably-socket";
+  import { onMount } from "svelte";
 
   let message = "";
   let messages: any = [];
+  let history: any = [];
 
-  // Listen for incoming messages
-  socket.on("chat message", (msg) => {
-    messages = [...messages, msg];
+  const channel = realtime.channels.get("chatroom");
+
+  $: runFunc = async () => {
+    history = await channel.history();
+
+    console.log({ history: history.items });
+  }; // load data in server side: https://kit.svelte.dev/docs/load
+
+  onMount(() => {
+    channel.subscribe("message", (msg) => {
+      messages = [...messages, msg.data];
+    });
   });
 
-  // Send a message
-  const sendMessage = () => {
-    if (message.trim()) {
-      socket.emit("chat message", message);
+  function sendMessage() {
+    if (message.trim() !== "") {
+      channel.publish("message", message);
       message = "";
     }
-  };
+  }
 </script>
 
 <div class="px-5 py-10 flex flex-col gap-2 container">

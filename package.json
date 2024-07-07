@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "yarn client & yarn server",
+		"dev": "vite dev",
 		"server": "cd ./backend && nodemon index.ts",
 		"client": "vite dev",
 		"build": "vite build",
@@ -26,6 +26,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"ably": "^2.2.1",
 		"nodemon": "^3.1.4"
 	}
 }

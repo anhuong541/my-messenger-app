@@ -3,8 +3,9 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
-		"server": "cd ./backend && yarn dev",
+		"dev": "yarn client & yarn server",
+		"server": "cd ./backend && nodemon index.ts",
+		"client": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -22,6 +23,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"nodemon": "^3.1.4",
 		"socket.io-client": "^4.7.5"
 	}
 }

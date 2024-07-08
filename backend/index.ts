@@ -1,8 +1,6 @@
 import e, { Request, Response } from "express";
 import cors from "cors";
 
-const Ably = require("ably");
-
 const app = e(); // run express
 const port = 3000;
 

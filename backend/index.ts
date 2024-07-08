@@ -17,18 +17,3 @@ app.use(
     credentials: true,
   })
 );
-
-// Connect to Ably with your API key
-const ably = new Ably.Realtime(
-  "u1o7fg.leWzKQ:LSN-s392sA8ra9fQrn103SxKDmIyv8G01RFjkM4SRO0"
-);
-ably.connection("connected", () => {
-  console.log("Connected to Ably!");
-});
-
-const channel = ably.channels.get("get-started");
-channel.subscribe("first", (message: any) => {
-  console.log("Message received: " + message.data);
-});
-
-channel.publish("first", "Here is my first message!");

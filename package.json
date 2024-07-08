@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
-		"server": "cd ./backend && nodemon index.ts",
+		"server": "cd .. && cd ./backend && nodemon index.ts",
 		"client": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",

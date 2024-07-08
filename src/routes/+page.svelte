@@ -1,12 +1,18 @@
-<script>
+<script lang="ts">
+  import Login from "../components/pages/login.svelte";
+  import Register from "../components/pages/register.svelte";
+  import { userAccessState } from "../store";
   import Layout from "./+layout.svelte";
 </script>
 
 <Layout>
-  <h1>Welcome to SvelteKit</h1>
-  <p>
-    Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
-  </p>
-
-  <a href="/chat">Go to Message</a>
+  <main
+    class="container w-screen h-screen m-auto flex justify-center items-center"
+  >
+    {#if $userAccessState === "login"}
+      <Login />
+    {:else}
+      <Register />
+    {/if}
+  </main>
 </Layout>

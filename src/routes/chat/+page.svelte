@@ -1,36 +1,9 @@
 <script lang="ts">
-  import { realtime } from "$lib/ably-socket";
-  import { onMount } from "svelte";
-
   let message = "";
   let messages: any = [];
   let history: any = [];
 
-  const channel = realtime.channels.get("chatroom");
-
-  const sendMessage = () => {
-    if (message.trim() !== "") {
-      channel.publish("message", message);
-      message = "";
-    }
-  };
-
-  // $: runFunc = async () => {
-  //   history = await channel.history();
-
-  //   console.log({ history: history.items });
-  // };
-  // load data in server side: https://kit.svelte.dev/docs/load
-  // if dont just use Query tanstacks
-
-  // the flow is loading the history chat and send the message
-  // update channel rules time store messages is 24 to 72 hour
-
-  onMount(() => {
-    channel.subscribe("message", (msg) => {
-      messages = [...messages, msg.data];
-    });
-  });
+  const sendMessage = () => {};
 </script>
 
 <div class="px-5 py-10 flex flex-col gap-2 container">

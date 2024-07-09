@@ -2,10 +2,10 @@
   import Icon from "@iconify/svelte";
   import fakeProfile from "$lib/assets/profile.jpg";
 
-  const fakeListFriends = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+  const fakeListFriends = [{}, {}, {}, {}, {}, {}, {}];
 </script>
 
-<div class="col-span-3 flex flex-col gap-4 pt-4 pb-2 h-screen overflow-hidden">
+<div class="col-span-3 flex flex-col gap-4 pt-4 pb-2 h-full overflow-hidden">
   <!-- serch bar -->
   <label for="searchFriend" class="relative flex px-4 searchIco">
     <input

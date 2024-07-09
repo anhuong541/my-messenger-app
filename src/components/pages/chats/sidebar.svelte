@@ -1,8 +1,23 @@
 <script>
   import Icon from "@iconify/svelte";
-  import fakeProfile from "$lib/assets/profile.jpg";
+  import fakeProfile from "$lib/assets/luka-modric-avatar.jpg";
 
-  const fakeListFriends = [{}, {}, {}, {}, {}, {}, {}];
+  const fakeListFriends = [
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+  ];
 </script>
 
 <div class="col-span-3 flex flex-col gap-4 pt-4 pb-2 h-full overflow-hidden">
@@ -20,16 +35,22 @@
     />
   </label>
 
-  <div class="flex flex-col gap-2 px-4 overflow-auto">
-    {#each fakeListFriends as friend}
-      <div class="flex gap-4 hover:bg-primaryColor-200 p-2 rounded-md">
+  <div class="flex flex-col gap-2 px-4 h-[90vh] overflow-y-auto">
+    {#each fakeListFriends ?? [] as friend}
+      <div
+        class="flex gap-4 hover:bg-primaryColor-200 p-2 rounded-md cursor-pointer"
+      >
         <img src={fakeProfile} alt="" class="w-16 h-16 rounded-md" />
         <div class="flex flex-col justify-between gap-1 py-1 w-full">
           <span class="flex justify-between items-center pr-2">
-            <h4 class="font-medium text-lg">Name Somebody</h4>
-            <p class="text-gray-400">4m</p>
+            <h4 class="font-medium xl:text-lg text-base">Name Somebody</h4>
+            <p class="text-gray-400 xl:text-base text-sm">4m</p>
           </span>
-          <p class="text-gray-400">The lasted message...</p>
+          <p
+            class="text-gray-400 whitespace-nowrap overflow-hidden overflow-ellipsis"
+          >
+            The lasted message...
+          </p>
         </div>
 
         <!-- add Pin icon later -->

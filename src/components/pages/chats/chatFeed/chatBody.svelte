@@ -1,11 +1,10 @@
 <script>
   import Icon from "@iconify/svelte";
-
-  const fakeChatMessageEvents = [];
+  import ChatEvents from "./chatEvents.svelte";
 </script>
 
 <div class="flex flex-col justify-between gap-2 h-full">
-  <div class="h-full">Chat Render Events</div>
+  <ChatEvents />
   <form class="flex gap-2 w-full">
     <input
       type="text"

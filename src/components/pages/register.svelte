@@ -1,13 +1,14 @@
 <script>
-  import { userAccessState } from "../../store import ../../lib/store@iconify/svelte";
+  import { userAccessState } from "../../store";
 
   import heroLoginImg from "$lib/assets/login-hero.webp";
+  import Icon from "@iconify/svelte";
 </script>
 
 <div
-  class="grid lg:grid-cols-2 grid-cols-1 w-[80vw] h-[80vh] rounded-[20px] py-8 px-16 gap-16 bg-gray-100"
+  class="grid lg:grid-cols-2 grid-cols-1 lg:w-[80vw] lg:h-[80vh] h-full w-full lg:rounded-[20px] sm:py-8 sm:px-16 px-8 gap-16 bg-gray-100"
 >
-  <div class="my-auto max-w-[500px]">
+  <div class="my-auto lg:max-w-[500px]">
     <h1 class="font-semibold text-4xl mb-8">Register</h1>
     <form action="" class="flex flex-col gap-6">
       <div class="flex flex-col gap-3">

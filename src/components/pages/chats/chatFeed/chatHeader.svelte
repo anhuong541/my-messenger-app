@@ -7,6 +7,7 @@
   const fakeListOption = [
     { name: "call", handler: () => {}, icon: "fluent:call-32-regular" },
     { name: "video", handler: () => {}, icon: "fluent:video-32-light" },
+    { name: "info", handler: () => tabMobileView.set("info"), icon: "ph:info" },
     {
       name: "return",
       handler: () => tabMobileView.set("sidebar"),
@@ -31,7 +32,7 @@
   </div>
 
   <div id="list-option" class="flex gap-2">
-    {#each fakeListOption.filter( (item) => ($viewResponsive === "Mobile & Tablet" ? item : item.name !== "return") ) as { icon, handler }}
+    {#each fakeListOption.filter( (item) => ($viewResponsive === "Mobile & Tablet" ? item : item.name !== "return" && item.name !== "info") ) as { icon, handler }}
       <button on:click={handler}>
         <Icon
           {icon}

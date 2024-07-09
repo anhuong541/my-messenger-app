@@ -33,8 +33,10 @@
     <div></div>
   {:else if $tabMobileView === "sidebar"}
     <Sidebar colSpan="col-span-12 bg-gray-100" />
-  {:else}
+  {:else if $tabMobileView === "chatfeed"}
     <ChatFeeds colSpan="col-span-12 bg-gray-100" />
+  {:else if $tabMobileView === "info"}
+    <ChatInfo colSpan="col-span-12 bg-gray-100" />
   {/if}
 </main>
 

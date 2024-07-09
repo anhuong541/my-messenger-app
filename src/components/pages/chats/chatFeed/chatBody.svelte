@@ -5,7 +5,7 @@
 
 <div class="flex flex-col justify-between gap-2 h-full">
   <ChatEvents />
-  <form class="flex gap-2 w-full">
+  <form class="flex gap-2 w-full flex-shrink-0">
     <input
       type="text"
       class="w-full py-2 px-4"

@@ -1,26 +1,15 @@
 <script>
   import Icon from "@iconify/svelte";
   import fakeProfile from "$lib/assets/luka-modric-avatar.jpg";
+  import { tabMobileView } from "../../../store";
+  export let colSpan = "";
 
-  const fakeListFriends = [
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-  ];
+  const fakeListFriends = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 </script>
 
-<div class="col-span-3 flex flex-col gap-4 pt-4 pb-2 h-full overflow-hidden">
+<div
+  class={`${colSpan} flex flex-col gap-4 pt-4 pb-2 h-full w-full overflow-hidden`}
+>
   <!-- serch bar -->
   <label for="searchFriend" class="relative flex px-4 searchIco">
     <input
@@ -35,10 +24,14 @@
     />
   </label>
 
-  <div class="flex flex-col gap-2 px-4 h-[90vh] overflow-y-auto">
+  <div
+    class="flex flex-col gap-2 px-4 h-[90vh] overflow-y-auto overflow-x-hidden"
+  >
     {#each fakeListFriends ?? [] as friend}
+      <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
       <div
         class="flex gap-4 hover:bg-primaryColor-200 p-2 rounded-md cursor-pointer"
+        on:click={() => tabMobileView.set("chatfeed")}
       >
         <img src={fakeProfile} alt="" class="w-16 h-16 rounded-md" />
         <div class="flex flex-col justify-between gap-1 py-1 w-full">

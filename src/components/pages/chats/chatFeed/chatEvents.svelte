@@ -60,14 +60,18 @@
   <div class="h-full flex flex-col gap-2 overflow-y-auto">
     {#each fakeChatMessageEvents as message, index}
       {#if fakeUserId !== message.userId}
-        <div class="flex justify-start items-end gap-4 pr-20">
+        <div class="flex justify-start items-end gap-4 sm:pr-20 pr-16">
           {#if index === messageEventsSize - 1 || message.userId !== fakeChatMessageEvents[index + 1].userId}
-            <img src={message.avatar} alt="" class="w-16 h-16 rounded-md" />
+            <img
+              src={message.avatar}
+              alt=""
+              class="sm:w-16 sm:h-16 w-12 h-12 rounded-md"
+            />
           {:else}
-            <div class="w-16 h-16 flex-shrink-0" />
+            <div class="sm:w-16 sm:h-16 w-12 h-12 flex-shrink-0" />
           {/if}
           <div
-            class="flex flex-col gap-2 bg-primaryColor-300 rounded-md px-4 py-2"
+            class="flex flex-col gap-2 bg-primaryColor-200 rounded-md px-4 py-2"
           >
             <h5 class="font-medium">{message.name}</h5>
             <p>{message.message}</p>
@@ -78,9 +82,9 @@
           </div>
         </div>
       {:else}
-        <div class="flex justify-end items-end gap-4 pl-20">
+        <div class="flex justify-end items-end gap-4 sm:pl-20 pl-16">
           <div
-            class="flex flex-col gap-2 bg-primaryColor-300 rounded-md px-4 py-2"
+            class="flex flex-col gap-2 bg-primaryColor-600 text-white rounded-md px-4 py-2"
           >
             <h5 class="font-medium">{message.name}</h5>
             <p>{message.message}</p>
@@ -89,7 +93,15 @@
               <p>{dayjs(message.createAt * 1000).format("HH:mm")}</p>
             </div>
           </div>
-          <img src={message.avatar} alt="" class="w-16 h-16 rounded-md" />
+          {#if index === messageEventsSize - 1 || message.userId !== fakeChatMessageEvents[index + 1].userId}
+            <img
+              src={message.avatar}
+              alt=""
+              class="sm:w-16 sm:h-16 w-12 h-12 rounded-md"
+            />
+          {:else}
+            <div class="sm:w-16 sm:h-16 w-12 h-12 flex-shrink-0" />
+          {/if}
         </div>
       {/if}
     {/each}

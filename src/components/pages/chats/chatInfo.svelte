@@ -1,10 +1,12 @@
 <script>
   import Icon from "@iconify/svelte";
 
+  export let colSpan = "";
+
   const fakeFilesList = [{}, {}, {}, {}];
 </script>
 
-<div class="col-span-2 xl:flex hidden flex-col gap-6">
+<div class={`${colSpan} xl:flex hidden flex-col gap-6`}>
   <div class="flex flex-col gap-4 bg-gray-100 rounded-3xl py-4 h-[500px]">
     <div class="px-6">
       <h3 class="font-medium text-xl">Info</h3>

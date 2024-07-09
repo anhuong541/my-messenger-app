@@ -1,9 +1,11 @@
 <script lang="ts">
   import ChatBody from "./chatFeed/chatBody.svelte";
   import ChatHeader from "./chatFeed/chatHeader.svelte";
+
+  export let colSpan = "";
 </script>
 
-<div class="col-span-7 flex flex-col gap-2 px-4 py-4 h-full overflow-hidden">
+<div class={`${colSpan} flex flex-col gap-2 px-4 py-4 h-full overflow-hidden`}>
   <!-- chat header -->
   <ChatHeader />
   <ChatBody />

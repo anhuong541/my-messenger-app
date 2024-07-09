@@ -1,12 +1,18 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
+  import { tabMobileView, viewResponsive } from "../../../../store";
 
   let status: "online" | "offline" | "isTyping" = "online";
 
   const fakeListOption = [
-    { icon: "fluent:call-32-regular" },
-    { icon: "fluent:video-32-light" },
-    { icon: "iwwa:option" },
+    { name: "call", handler: () => {}, icon: "fluent:call-32-regular" },
+    { name: "video", handler: () => {}, icon: "fluent:video-32-light" },
+    {
+      name: "return",
+      handler: () => tabMobileView.set("sidebar"),
+      icon: "carbon:return",
+    },
+    // { icon: "iwwa:option", handler: () => {} },
   ];
 </script>
 
@@ -25,11 +31,13 @@
   </div>
 
   <div id="list-option" class="flex gap-2">
-    {#each fakeListOption as { icon }}
-      <Icon
-        {icon}
-        class="w-8 h-8 rounded-md p-1 cursor-pointer hover:bg-primaryColor-200"
-      />
+    {#each fakeListOption.filter( (item) => ($viewResponsive === "Mobile & Tablet" ? item : item.name !== "return") ) as { icon, handler }}
+      <button on:click={handler}>
+        <Icon
+          {icon}
+          class="w-8 h-8 rounded-md p-1 cursor-pointer hover:bg-primaryColor-200"
+        />
+      </button>
     {/each}
   </div>
 </div>

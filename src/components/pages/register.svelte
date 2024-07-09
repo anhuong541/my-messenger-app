@@ -1,6 +1,5 @@
 <script>
-  import { userAccessState } from "../../store";
-  import Icon from "@iconify/svelte";
+  import { userAccessState } from "../../store import ../../lib/store@iconify/svelte";
 
   import heroLoginImg from "$lib/assets/login-hero.webp";
 </script>

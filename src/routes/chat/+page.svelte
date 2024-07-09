@@ -1,24 +1,13 @@
 <script lang="ts">
-  let message = "";
-  let messages: any = [];
-  let history: any = [];
-
-  const sendMessage = () => {};
+  import { ChatInfo, Sidebar, ChatFeeds } from "../../components/pages/chats";
 </script>
 
-<div class="px-5 py-10 flex flex-col gap-2 container">
-  <p class="font-medium text-sm">Message Here:</p>
-  <ul id="messages" class="flex flex-col gap-2">
-    {#each messages as msg}
-      <li class="">- {msg}</li>
-    {/each}
-  </ul>
-  <div>
-    <form on:submit|preventDefault={sendMessage}>
-      <input bind:value={message} autocomplete="off" class="px-4 py-2" />
-      <button type="submit" class="px-4 py-1 border rounded-lg">Send</button>
-    </form>
+<main class="h-screen w-screen grid grid-cols-12">
+  <div class="col-span-10 grid grid-cols-10 gap-6 bg-gray-100">
+    <Sidebar />
+    <ChatFeeds />
   </div>
-</div>
+  <ChatInfo />
+</main>
 
 <style></style>

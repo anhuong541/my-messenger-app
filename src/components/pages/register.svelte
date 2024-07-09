@@ -6,17 +6,18 @@
 </script>
 
 <div
-  class="grid lg:grid-cols-2 grid-cols-1 w-[80vw] h-[80vh] rounded-[20px] py-8 px-16 gap-16 bg-gray-200"
+  class="grid lg:grid-cols-2 grid-cols-1 w-[80vw] h-[80vh] rounded-[20px] py-8 px-16 gap-16 bg-gray-100"
 >
   <div class="my-auto max-w-[500px]">
     <h1 class="font-semibold text-4xl mb-8">Register</h1>
     <form action="" class="flex flex-col gap-6">
       <div class="flex flex-col gap-3">
-        <div class="relative flex">
+        <label class="relative flex" for="username">
           <input
             type="text"
             class="p-3 rounded-md text-sm w-full"
             placeholder="Username"
+            id="username"
           />
           <Icon
             icon="solar:user-outline"
@@ -25,8 +26,8 @@
             style="color: black;"
             class="absolute right-3 top-[50%] -translate-y-1/2"
           />
-        </div>
-        <div class="relative flex">
+        </label>
+        <label class="relative flex" for="myPassword">
           <input
             type="text"
             id="myPassword"
@@ -41,8 +42,8 @@
             class="absolute right-3 top-[50%] -translate-y-1/2"
           />
           <!-- // Password -->
-        </div>
-        <div class="relative flex">
+        </label>
+        <label class="relative flex" for="confirmPassword">
           <input
             type="text"
             id="confirmPassword"
@@ -57,7 +58,7 @@
             class="absolute right-3 top-[50%] -translate-y-1/2"
           />
           <!-- // Password -->
-        </div>
+        </label>
         <div class="flex justify-end">
           <button
             on:click={() => userAccessState.set("login")}

@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { ChatInfo, Sidebar, ChatFeeds } from "../../components/pages/chats";
+  import { ChatInfo, Sidebar } from "../../lib/components/pages/chats";
   import { tabMobileView, viewResponsive } from "../../store";
+  import ChatFeeds from "./chatFeeds.svelte";
 
   let responsiveView: "PC" | "Mobile & Tablet" | "Big Tablet" | null = null;
 

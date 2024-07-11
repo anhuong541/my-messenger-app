@@ -1,6 +1,6 @@
 <script lang="ts">
-  import ChatBody from "./chatFeed/chatBody.svelte";
-  import ChatHeader from "./chatFeed/chatHeader.svelte";
+  import ChatBody from "../../lib/components/pages/chats/chatFeed/chatBody.svelte";
+  import ChatHeader from "../../lib/components/pages/chats/chatFeed/chatHeader.svelte";
 
   export let colSpan = "";
 </script>

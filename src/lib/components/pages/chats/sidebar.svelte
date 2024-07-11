@@ -1,7 +1,7 @@
 <script>
   import Icon from "@iconify/svelte";
   import fakeProfile from "$lib/assets/luka-modric-avatar.jpg";
-  import { tabMobileView } from "../../../store";
+  import { tabMobileView } from "../../../../store";
   export let colSpan = "";
 
   const fakeListFriends = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];

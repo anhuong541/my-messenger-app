@@ -1,6 +1,6 @@
 <script>
   import Icon from "@iconify/svelte";
-  import { tabMobileView } from "../../../store";
+  import { tabMobileView } from "../../../../store";
 
   export let colSpan = "";
 

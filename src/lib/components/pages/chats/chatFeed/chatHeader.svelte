@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
-  import { tabMobileView, viewResponsive } from "../../../../store";
+  import { tabMobileView, viewResponsive } from "../../../../../store";
 
   let status: "online" | "offline" | "isTyping" = "online";
 

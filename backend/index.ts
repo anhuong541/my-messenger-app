@@ -4,7 +4,7 @@ import cors from "cors";
 const app = e(); // run express
 const port = 3000;
 
-app.use(e.static("public"));
+// app.use(e.static("public"));
 //CORS
 app.use(
   cors({
@@ -15,3 +15,13 @@ app.use(
     credentials: true,
   })
 );
+
+app.get("/", (req: Request, res: Response) => {
+  console.log("it run");
+
+  res.send("Hello World");
+});
+
+app.listen(port, () => {
+  console.log(`listen to port ${port}`);
+});

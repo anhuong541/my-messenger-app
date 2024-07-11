@@ -1,7 +1,7 @@
 <script lang="ts">
   import { userAccessState } from "../store";
-  import Login from "../components/pages/login.svelte";
-  import Register from "../components/pages/register.svelte";
+  import Login from "../lib/components/pages/login.svelte";
+  import Register from "../lib/components/pages/register.svelte";
   import Layout from "./+layout.svelte";
 </script>
 

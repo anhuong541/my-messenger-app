@@ -1,19 +1,30 @@
-<script>
+<script lang="ts">
   import { userAccessState } from "../../../store";
-  import { createUserWithEmailAndPassword } from "firebase/auth";
+  import { createUserWithEmailAndPassword, type Auth } from "firebase/auth";
 
   import heroLoginImg from "$lib/assets/login-hero.webp";
   import Icon from "@iconify/svelte";
+  import { firestore } from "$lib/utils/firebase";
+  import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 
-  export let auth;
+  export let auth: Auth;
 
   let email = "";
   let password = "";
   let confirmPassword = "";
+  let username = "";
 
   const handleSubmit = async () => {
     if (password === confirmPassword) {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      const selectDoc = doc(firestore, "/users", res.user.uid);
+      await setDoc(selectDoc, {
+        uid: res.user.uid,
+        username,
+        email,
+        createdAt: Date.now(),
+      });
+
       email = "";
       password = "";
     } else {
@@ -36,6 +47,22 @@
             class="p-3 rounded-md text-sm w-full"
             placeholder="Email"
             id="email"
+          />
+          <Icon
+            icon="mdi:email-outline"
+            width="18"
+            height="18"
+            style="color: black;"
+            class="absolute right-3 top-[50%] -translate-y-1/2"
+          />
+        </label>
+        <label class="relative flex" for="username">
+          <input
+            type="text"
+            bind:value={username}
+            class="p-3 rounded-md text-sm w-full"
+            placeholder="Username"
+            id="username"
           />
           <Icon
             icon="solar:user-outline"

@@ -33,7 +33,7 @@
             bind:value={email}
           />
           <Icon
-            icon="solar:user-linear"
+            icon="mdi:email-outline"
             width="18"
             height="18"
             style="color: black"

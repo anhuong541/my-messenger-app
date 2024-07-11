@@ -4,15 +4,14 @@ import { getFirestore } from "firebase/firestore";
 import { userStore } from "sveltefire";
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyC87hTPmO7rE4U0ekz6cKeFroUkWKmcWQ8",
-  authDomain: "my-messenger-applicaiton.firebaseapp.com",
-  databaseURL:
-    "https://my-messenger-applicaiton-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "my-messenger-applicaiton",
-  storageBucket: "my-messenger-applicaiton.appspot.com",
-  messagingSenderId: "218145851922",
-  appId: "1:218145851922:web:63899507cc5fbad156a6cb",
-  measurementId: "G-FDK6WN6DXQ",
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  databaseURL: process.env.DATABASE_URL,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUDKET,
+  messagingSenderId: process.env.MSG_SENDER_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID,
 };
 
 // Initialize Firebase

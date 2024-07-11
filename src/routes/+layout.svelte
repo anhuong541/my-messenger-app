@@ -8,7 +8,7 @@
   <slot />
 </FirebaseApp>
 
-<style lang="postcss">
+<style>
   :global(html) {
     background-color: theme(colors.primaryColor.700);
   }

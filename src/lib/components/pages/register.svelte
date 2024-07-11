@@ -1,8 +1,25 @@
 <script>
   import { userAccessState } from "../../../store";
+  import { createUserWithEmailAndPassword } from "firebase/auth";
 
   import heroLoginImg from "$lib/assets/login-hero.webp";
   import Icon from "@iconify/svelte";
+
+  export let auth;
+
+  let email = "";
+  let password = "";
+  let confirmPassword = "";
+
+  const handleSubmit = async () => {
+    if (password === confirmPassword) {
+      await createUserWithEmailAndPassword(auth, email, password);
+      email = "";
+      password = "";
+    } else {
+      // popup toast confirmPassword is wrong
+    }
+  };
 </script>
 
 <div
@@ -10,14 +27,15 @@
 >
   <div class="my-auto lg:max-w-[500px]">
     <h1 class="font-semibold text-4xl mb-8">Register</h1>
-    <form action="" class="flex flex-col gap-6">
+    <form action="" class="flex flex-col gap-6" on:submit={handleSubmit}>
       <div class="flex flex-col gap-3">
-        <label class="relative flex" for="username">
+        <label class="relative flex" for="email">
           <input
-            type="text"
+            type="email"
+            bind:value={email}
             class="p-3 rounded-md text-sm w-full"
-            placeholder="Username"
-            id="username"
+            placeholder="Email"
+            id="email"
           />
           <Icon
             icon="solar:user-outline"
@@ -33,6 +51,7 @@
             id="myPassword"
             class="p-3 rounded-md text-sm w-full"
             placeholder="Password"
+            bind:value={password}
           />
           <Icon
             icon="mdi:password-outline"
@@ -49,6 +68,7 @@
             id="confirmPassword"
             class="p-3 rounded-md text-sm w-full"
             placeholder="Confirm Your Password"
+            bind:value={confirmPassword}
           />
           <Icon
             icon="fluent-mdl2:password-field"

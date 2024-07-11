@@ -1,20 +1,30 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
   import { tabMobileView, viewResponsive } from "../../../../../store";
+  import { signOutFirebase } from "$lib/utils";
 
   let status: "online" | "offline" | "isTyping" = "online";
 
-  const fakeListOption = [
+  $: listOption = [
     { name: "call", handler: () => {}, icon: "fluent:call-32-regular" },
     { name: "video", handler: () => {}, icon: "fluent:video-32-light" },
     { name: "info", handler: () => tabMobileView.set("info"), icon: "ph:info" },
+    {
+      name: "signout",
+      handler: () => signOutFirebase(),
+      icon: "uil:signout",
+    },
     {
       name: "return",
       handler: () => tabMobileView.set("sidebar"),
       icon: "carbon:return",
     },
     // { icon: "iwwa:option", handler: () => {} },
-  ];
+  ].filter((item) =>
+    $viewResponsive === "Mobile & Tablet"
+      ? item
+      : item.name !== "return" && item.name !== "info"
+  );
 </script>
 
 <div class="flex justify-between items-center py-4 border-b">
@@ -32,7 +42,7 @@
   </div>
 
   <div id="list-option" class="flex gap-2">
-    {#each fakeListOption.filter( (item) => ($viewResponsive === "Mobile & Tablet" ? item : item.name !== "return" && item.name !== "info") ) as { icon, handler }}
+    {#each listOption as { icon, handler }}
       <button on:click={handler}>
         <Icon
           {icon}

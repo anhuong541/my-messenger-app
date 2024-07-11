@@ -1,8 +1,20 @@
 <script>
   import { userAccessState } from "../../../store";
+  import { signInWithEmailAndPassword } from "firebase/auth";
 
   import heroLoginImg from "$lib/assets/login-hero.webp";
   import Icon from "@iconify/svelte";
+
+  export let auth;
+
+  let email = "";
+  let password = "";
+
+  const handleSubmit = async () => {
+    await signInWithEmailAndPassword(auth, email, password);
+    email = "";
+    password = "";
+  };
 </script>
 
 <div
@@ -10,7 +22,7 @@
 >
   <div class="my-auto lg:max-w-[500px]">
     <h1 class="font-semibold text-4xl mb-8">Welcome back</h1>
-    <form action="" class="flex flex-col gap-6">
+    <form action="" class="flex flex-col gap-6" on:submit={handleSubmit}>
       <div class="flex flex-col gap-3">
         <label class="relative flex" for="username">
           <input
@@ -18,6 +30,7 @@
             class="p-3 rounded-md text-sm w-full"
             placeholder="Username"
             id="username"
+            bind:value={email}
           />
           <Icon
             icon="solar:user-linear"
@@ -33,6 +46,7 @@
             id="myPassword"
             class="p-3 rounded-md text-sm w-full"
             placeholder="Password"
+            bind:value={password}
           />
           <Icon
             icon="fluent-mdl2:password-field"
@@ -50,18 +64,19 @@
           >
             <input
               type="checkbox"
-              name=""
+              name="rememberme"
               id="remember-me"
               class="w-4 h-4 accent-primaryColor-500"
             />
             Remember Me
           </label>
-          <button
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <div
             on:click={() => userAccessState.set("register")}
             class="hover:underline text-primaryColor-500 text-sm"
           >
             Don't have an account?
-          </button>
+          </div>
         </div>
       </div>
       <button

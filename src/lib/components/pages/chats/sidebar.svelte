@@ -2,34 +2,27 @@
   import Icon from "@iconify/svelte";
   import fakeProfile from "$lib/assets/luka-modric-avatar.jpg";
   import { tabMobileView } from "../../../../store";
+  import OverlayPopup from "$lib/components/OverlayPopup.svelte";
 
   export let colSpan = "";
   export let friends = [] as any;
   export let friendSelect = {};
 
-  $: console.log({ friends });
+  let popUpSearchingFriend: boolean = false;
 </script>
 
 <div
-  class={`${colSpan} flex flex-col gap-4 pt-4 pb-2 h-full w-full overflow-hidden`}
+  class={`${colSpan} flex flex-col gap-4 pt-8 pb-2 h-full w-full overflow-hidden`}
 >
-  <!-- serch bar -->
-  <label for="searchFriend" class="relative flex px-4 searchIco">
-    <input
-      type="text"
-      id="searchFriend"
-      placeholder="Search"
-      class="p-3 pr-5 pl-10 rounded-md text-sm w-full"
-    />
-    <Icon
-      icon="ion:search"
-      class="absolute left-8 top-[50%] -translate-y-1/2"
-    />
-  </label>
-  <!-- 
-    <button on:click={() => console.log("messages: ", messages)}>
-      on click
-    </button> -->
+  <div class="px-4">
+    <button
+      on:click={() => (popUpSearchingFriend = !popUpSearchingFriend)}
+      class="w-full flex gap-2 justify-center items-center border rounded-md px-4 py-2 bg-primaryColor-500 active:bg-primaryColor-300 hover:bg-primaryColor-400 text-white"
+    >
+      <Icon icon="ion:search" />
+      Search your friend
+    </button>
+  </div>
 
   <div
     class="flex flex-col gap-2 px-4 h-[90vh] overflow-y-auto overflow-x-hidden"
@@ -61,6 +54,18 @@
     {/each}
   </div>
 </div>
+
+<OverlayPopup isOpen={popUpSearchingFriend} clickOutSideToClose>
+  <div>
+    <h2>Add new Friend</h2>
+
+    <form action="">
+      <label for="">
+        <input type="text" placeholder="Type your friend name" />
+      </label>
+    </form>
+  </div>
+</OverlayPopup>
 
 <style>
   /* width */

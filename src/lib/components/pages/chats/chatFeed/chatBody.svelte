@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
-  import ChatEvents from "./chatEvents.svelte";
+  import ChatEvents from "./ChatEvents.svelte";
 
   export let messages = [] as any;
 </script>

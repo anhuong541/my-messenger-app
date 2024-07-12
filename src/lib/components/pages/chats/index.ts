@@ -1,4 +1,4 @@
 // @ts-nocheck
-export { default as ChatFeeds } from "./chatFeeds.svelte";
-export { default as Sidebar } from "./sidebar.svelte";
-export { default as ChatInfo } from "./chatInfo.svelte";
+export { default as ChatFeeds } from "./ChatFeeds.svelte";
+export { default as Sidebar } from "./Sidebar.svelte";
+export { default as ChatInfo } from "./ChatInfo.svelte";

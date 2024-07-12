@@ -28,8 +28,6 @@
     localStorage.setItem("view", responsiveView);
     viewResponsive.set(responsiveView);
   });
-
-  $: console.log({ friend });
 </script>
 
 <SignedOut>you are signing out!!!</SignedOut>

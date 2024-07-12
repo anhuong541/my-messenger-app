@@ -1,6 +1,6 @@
 <script lang="ts">
-  import ChatBody from "$lib/components/pages/chats/chatFeed/chatBody.svelte";
-  import ChatHeader from "$lib/components/pages/chats/chatFeed/chatHeader.svelte";
+  import ChatBody from "$lib/components/pages/chats/chatFeed/ChatBody.svelte";
+  import ChatHeader from "$lib/components/pages/chats/chatFeed/ChatHeader.svelte";
   import { firestore } from "$lib/utils/firebase";
   import { collectionStore } from "sveltefire";
 
@@ -20,7 +20,6 @@
   <!-- chat header -->
   <ChatHeader />
   <ChatBody messages={$messages} />
-  <button on:click={() => console.log(">>: ", $messages)}>click</button>
 </div>
 
 <style></style>

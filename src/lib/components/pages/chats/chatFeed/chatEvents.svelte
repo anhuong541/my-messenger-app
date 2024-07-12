@@ -4,6 +4,10 @@
   import user from "$lib/assets/profile.jpg";
   import Emojis from "../../../Emojis.svelte";
 
+  import defaultAvatar from "$lib/assets/default-avatar.jpg";
+
+  export let messages = [] as any;
+
   const fakeUserId = 541;
 
   const fakeChatMessageEvents = [
@@ -359,17 +363,17 @@
     },
   ];
 
-  const messageEventsSize = fakeChatMessageEvents.length;
+  const messageEventsSize = messages.length;
 </script>
 
 <div class="h-full overflow-hidden">
   <div class="flex-grow h-[80vh] flex flex-col gap-2 overflow-y-auto">
-    {#each fakeChatMessageEvents as message, index}
-      {#if fakeUserId !== message.userId}
+    {#each messages ?? [] as message, index}
+      {#if fakeUserId !== message?.userId}
         <div class="flex justify-start items-end gap-4 sm:pr-20 pr-16">
-          {#if index === messageEventsSize - 1 || message.userId !== fakeChatMessageEvents[index + 1].userId}
+          {#if index === messageEventsSize - 1 || message?.userId !== messages[index + 1]?.userId}
             <img
-              src={message.avatar}
+              src={message?.avatar ?? defaultAvatar}
               alt=""
               class="sm:w-16 sm:h-16 w-12 h-12 rounded-md"
             />
@@ -379,11 +383,11 @@
           <div
             class="flex flex-col gap-2 bg-primaryColor-200 rounded-md px-4 py-2"
           >
-            <h5 class="font-medium">{message.name}</h5>
-            <p>{message.message}</p>
+            <h5 class="font-medium">{message?.name}</h5>
+            <p>{message?.message}</p>
             <div class="flex justify-between text-xs">
-              <Emojis emojis={message.emojis} />
-              <p>{dayjs(message.createAt * 1000).format("HH:mm")}</p>
+              <!-- <Emojis emojis={message.emojis} /> -->
+              <p>{dayjs(message?.createAt * 1000).format("HH:mm")}</p>
             </div>
           </div>
         </div>
@@ -392,16 +396,16 @@
           <div
             class="flex flex-col gap-2 bg-primaryColor-600 text-white rounded-md px-4 py-2"
           >
-            <h5 class="font-medium">{message.name}</h5>
-            <p>{message.message}</p>
+            <h5 class="font-medium">{message?.name}</h5>
+            <p>{message?.message}</p>
             <div class="flex justify-between text-xs">
-              <Emojis emojis={message.emojis} />
-              <p>{dayjs(message.createAt * 1000).format("HH:mm")}</p>
+              <!-- <Emojis emojis={message?.emojis} /> -->
+              <p>{dayjs(message?.createAt * 1000).format("HH:mm")}</p>
             </div>
           </div>
-          {#if index === messageEventsSize - 1 || message.userId !== fakeChatMessageEvents[index + 1].userId}
+          {#if index === messageEventsSize - 1 || message?.userId !== messages[index + 1]?.userId}
             <img
-              src={message.avatar}
+              src={message?.avatar ?? defaultAvatar}
               alt=""
               class="sm:w-16 sm:h-16 w-12 h-12 rounded-md"
             />

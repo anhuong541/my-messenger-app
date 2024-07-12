@@ -1,10 +1,12 @@
-<script>
+<script lang="ts">
   import Icon from "@iconify/svelte";
   import ChatEvents from "./chatEvents.svelte";
+
+  export let messages = [] as any;
 </script>
 
 <div class="flex flex-col justify-between gap-2 h-full">
-  <ChatEvents />
+  <ChatEvents {messages} />
   <form class="flex gap-2 w-full flex-shrink-0" on:submit={() => {}}>
     <input
       type="text"

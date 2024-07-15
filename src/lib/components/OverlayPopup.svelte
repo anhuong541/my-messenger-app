@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { onMount, createEventDispatcher } from "svelte";
   import { showOverlayAnimationVariants } from "$lib/utils";
   import { Motion } from "svelte-motion";
@@ -12,7 +12,7 @@
     dispatch("close");
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: { key: string }) => {
     if (event.key === "Escape") {
       handleClose();
     }
@@ -49,7 +49,7 @@
     >
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
-        class={`relative ${
+        class={`relative bg-primaryColor-200 rounded-3xl ${
           isTableContent
             ? "xl:min-w-7xl max-w-4xl xl:w-max w-full"
             : "xl:min-w-2xl max-w-4xl xl:w-max w-full"

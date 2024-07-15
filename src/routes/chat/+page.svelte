@@ -11,12 +11,6 @@
   };
   let responsiveView: "PC" | "Mobile & Tablet" | "Big Tablet" | null = null;
 
-  $: () => {
-    if ($user?.uid === undefined) {
-      goto("/");
-    }
-  };
-
   onMount(() => {
     responsiveView =
       window?.innerWidth > 1440

@@ -2,13 +2,19 @@
   import Icon from "@iconify/svelte";
   import { tabMobileView, viewResponsive } from "../../../../../store";
   import { signOutFirebase } from "$lib/utils";
+  import { goto } from "$app/navigation";
 
   let status: "online" | "offline" | "isTyping" = "online";
 
   $: listOption = [
     { name: "call", handler: () => {}, icon: "fluent:call-32-regular" },
-    { name: "video", handler: () => {}, icon: "fluent:video-32-light" },
+    { name: "video", handler: () => {}, icon: "prime:video" },
     { name: "info", handler: () => tabMobileView.set("info"), icon: "ph:info" },
+    {
+      name: "profile",
+      handler: () => goto("/profile"),
+      icon: "iconamoon:profile-light",
+    },
     {
       name: "signout",
       handler: () => signOutFirebase(),

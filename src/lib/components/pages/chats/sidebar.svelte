@@ -55,14 +55,21 @@
   </div>
 </div>
 
-<OverlayPopup isOpen={popUpSearchingFriend} clickOutSideToClose>
-  <div>
-    <h2>Add new Friend</h2>
+<OverlayPopup bind:isOpen={popUpSearchingFriend} clickOutSideToClose>
+  <div class="relative flex flex-col gap-4">
+    <h2 class="font-medium text-xl">Add new Friend</h2>
 
     <form action="">
-      <label for="">
-        <input type="text" placeholder="Type your friend name" />
+      <label for="" class="flex gap-1 flex-col text-sm">
+        Type your friend email or their ID
+        <input
+          type="text"
+          placeholder="Type your friend name"
+          class="px-4 py-2 rounded-md text-base"
+        />
       </label>
+
+      <input type="submit" class="px-3 py-1 text-center" />
     </form>
   </div>
 </OverlayPopup>

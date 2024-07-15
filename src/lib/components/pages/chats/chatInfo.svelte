@@ -6,7 +6,7 @@
 
   const fakeFilesList = [
     { name: "Photos", icon: "f7:photo-on-rectangle", count: 12 },
-    { name: "Videos", icon: "fluent:video-32-light", count: 1 },
+    { name: "Videos", icon: "prime:video", count: 1 },
     { name: "Files", icon: "ph:files", count: 30 },
     { name: "links", icon: "ri:links-fill", count: 100 },
   ];

@@ -1,18 +1,10 @@
 <script lang="ts">
   import { userAccessState } from "../store";
-  import Login from "../lib/components/pages/login.svelte";
-  import Register from "../lib/components/pages/register.svelte";
+  import Login from "../lib/components/pages/Login.svelte";
+  import Register from "../lib/components/pages/Register.svelte";
   import Layout from "./+layout.svelte";
   import { SignedIn, SignedOut } from "sveltefire";
   import { signOut } from "firebase/auth";
-  import { user } from "$lib/utils/firebase";
-  import { goto } from "$app/navigation";
-
-  $: {
-    if ($user?.uid) {
-      goto("/chat");
-    }
-  }
 </script>
 
 <Layout>

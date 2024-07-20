@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
 import { userStore } from "sveltefire";
 
@@ -18,7 +19,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
 const auth = getAuth(firebase);
+const database = getDatabase(firebase);
 const firestore = getFirestore(firebase);
 const user = userStore(auth);
 
-export { firebase, auth, firestore, user, firebaseConfig };
+export { firebase, auth, firestore, user, firebaseConfig, database };

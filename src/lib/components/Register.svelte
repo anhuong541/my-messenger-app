@@ -5,6 +5,7 @@
   import Button from "./Widget/Button.svelte";
   import { isLoading, loginState } from "$lib/utils/store";
   import { onSubmitUserAction } from "$lib/utils/databaseAction";
+  import { triggerToast } from "$lib/utils";
 
   let email = "";
   let password = "";
@@ -15,6 +16,8 @@
       await onSubmitUserAction(email, password);
       email = "";
       password = "";
+    } else {
+      triggerToast("Your passwords does not match", "warning");
     }
   };
 </script>

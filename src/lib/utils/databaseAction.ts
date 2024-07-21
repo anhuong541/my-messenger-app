@@ -5,6 +5,7 @@ import {
 import { auth } from "./firebase";
 import { isLoading, loginState } from "./store";
 import type { LoginStateType } from "$lib/types/stores-type";
+import { triggerToast } from ".";
 
 export const onSubmitUserAction = async (email: string, password: string) => {
   if (email !== "" && password !== "") {
@@ -12,15 +13,27 @@ export const onSubmitUserAction = async (email: string, password: string) => {
     let onPageSignin: LoginStateType = "signin";
     loginState.subscribe((value) => (onPageSignin = value));
     if (onPageSignin === "signin") {
-      await signInWithEmailAndPassword(auth, email, password).catch((error) =>
-        console.log("login error: ", error)
-      );
+      await signInWithEmailAndPassword(auth, email, password).catch((error) => {
+        console.log("login error: ", error);
+        triggerToast(
+          "Something went wrong during login. Please check your password and try again",
+          "error"
+        );
+      });
     } else {
       await createUserWithEmailAndPassword(auth, email, password).catch(
-        (error) => console.log("sign up error: ", error)
+        (error) => {
+          console.log("sign up error: ", error);
+          triggerToast(
+            "Something went wrong during register. Please check your email and try again",
+            "error"
+          );
+        }
       );
     }
     isLoading.set(false);
+  } else {
+    triggerToast("Please your email or password", "warning");
   }
 };
 

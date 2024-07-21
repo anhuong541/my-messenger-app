@@ -16,8 +16,6 @@
     await onSubmitUserAction(email, password);
     email = "";
     password = "";
-
-    console.log("it trigger!!!!");
   };
 </script>
 
@@ -79,6 +77,15 @@
         on:click={() => loginState.set("signup")}
       >
         Register
+      </button>
+    </div>
+
+    <div>
+      <button
+        class="py-1 px-2 hover:underline text-primaryColor-700 hover:text-primaryColor-500"
+        on:click={signOut}
+      >
+        sign out demo
       </button>
     </div>
   </div>

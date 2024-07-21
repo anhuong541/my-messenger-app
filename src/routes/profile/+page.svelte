@@ -1,6 +1,6 @@
 <script>
 </script>
 
-<main class="flex h-screen w-screen"></main>
+<main class=""></main>
 
 <style></style>

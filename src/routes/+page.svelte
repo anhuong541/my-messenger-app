@@ -1,7 +1,16 @@
-<script lang="ts">
+<script>
+  import Login from "$lib/components/Login.svelte";
+  import Register from "$lib/components/Register.svelte";
+  import { loginState } from "$lib/utils/store";
 </script>
 
-<main>Hello World</main>
+<main class="h-screen w-screen flex bg-gray-100">
+  {#if $loginState === "signin"}
+    <Login />
+  {:else}
+    <Register />
+  {/if}
+</main>
 
-<style lang="postcss">
+<style>
 </style>

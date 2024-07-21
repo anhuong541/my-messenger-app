@@ -1,6 +1,6 @@
 <script>
-  import Login from "$lib/components/Login.svelte";
-  import Register from "$lib/components/Register.svelte";
+  import Login from "$lib/components/Pages/Home/Login.svelte";
+  import Register from "$lib/components/Pages/Home/Register.svelte";
   import { loginState } from "$lib/utils/store";
 </script>
 
@@ -11,6 +11,3 @@
     <Register />
   {/if}
 </main>
-
-<style>
-</style>

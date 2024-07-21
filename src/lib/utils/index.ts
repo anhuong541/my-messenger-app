@@ -1,14 +1,20 @@
-import { signOut } from "firebase/auth";
-import { auth } from "./firebase";
-import { goto } from "$app/navigation";
+import type { ToastStatusType } from "$lib/types/stores-type";
+import { showToast, toastMsg, toastStatus } from "./store";
 
-// place files you want to import through the `$lib` alias in this folder.
-export const signOutFirebase = () => {
-  signOut(auth);
-  goto("/");
-};
+let toastTimeout = 2000;
 
 export const showOverlayAnimationVariants = {
   visible: { opacity: 1, y: 0, display: "block" },
   hidden: { opacity: 0, y: -10, display: "none" },
+};
+
+export const wait = async (timeout: number) =>
+  new Promise((e) => setTimeout(e, timeout));
+
+export const triggerToast = async (msg: string, status: ToastStatusType) => {
+  toastMsg.set(msg);
+  toastStatus.set(status);
+  showToast.set(true);
+  await wait(toastTimeout);
+  showToast.set(false);
 };

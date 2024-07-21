@@ -1,4 +1,5 @@
 <script>
+  import Toast from "$lib/components/Toast.svelte";
   import "$lib/styles/app.css";
   import { auth, firestore } from "$lib/utils/firebase";
   import { FirebaseApp } from "sveltefire";
@@ -6,6 +7,7 @@
 
 <FirebaseApp {auth} {firestore}>
   <slot />
+  <Toast />
 </FirebaseApp>
 
 <style lang="postcss">

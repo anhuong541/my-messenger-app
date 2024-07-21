@@ -3,16 +3,29 @@
 
   import heroImg from "$lib/assets/hero-img-chat-app.jpg";
   import Button from "./Widget/Button.svelte";
-  import { loginState } from "$lib/utils/store";
+  import { isLoading, loginState } from "$lib/utils/store";
+  import { onSubmitUserAction } from "$lib/utils/databaseAction";
+
+  let email = "";
+  let password = "";
+  let confirmPassword = "";
+
+  const onSubmit = async () => {
+    if (password === confirmPassword) {
+      await onSubmitUserAction(email, password);
+      email = "";
+      password = "";
+    }
+  };
 </script>
 
 <div
-  class="m-auto w-4/5 h-4/5 grid grid-cols-3 gap-8 rounded-xl overflow-hidden p-8 bg-white"
+  class="m-auto w-4/5 h-4/5 grid grid-cols-3 gap-8 rounded-2xl overflow-hidden p-8 bg-white"
 >
   <div class="h-full col-span-1 flex flex-col gap-12 justify-center my-auto">
     <h1 class="text-4xl font-semibold">Sign Up</h1>
     <div class="flex flex-col gap-4">
-      <form action="" class="flex flex-col gap-4">
+      <form class="flex flex-col gap-4" on:submit={onSubmit}>
         <label for="user-email" class="relative">
           <Icon
             icon="material-symbols:mail-outline"
@@ -23,6 +36,7 @@
             name="user-email"
             id="user-email"
             placeholder="Your Email"
+            bind:value={email}
             class="border py-3 px-6 pl-12 rounded-xl w-full"
           />
         </label>
@@ -36,6 +50,7 @@
             name="type-user-password"
             id="type-user-password"
             placeholder="Your Password"
+            bind:value={password}
             class="border py-3 px-6 pl-12 rounded-xl w-full"
           />
         </label>
@@ -49,24 +64,19 @@
             name="confirm-user-password"
             id="confirm-user-password"
             placeholder="Confirm Your Password"
+            bind:value={confirmPassword}
             class="border py-3 px-6 pl-12 rounded-xl w-full"
           />
         </label>
 
-        <!-- <label
-          for="accept-policy"
-          class="flex items-center gap-2 text-xs cursor-pointer"
+        <Button
+          type="submit"
+          className="mt-4"
+          isLoading={$isLoading}
+          disabled={email !== "" && password !== "" && confirmPassword !== ""
+            ? false
+            : true}
         >
-          <input
-            type="checkbox"
-            name="accept-policy"
-            id="accept-policy"
-            class="w-4 h-4"
-          />
-          I agree to the Term & Conditions and Privacy Policy
-        </label> -->
-
-        <Button type="submit" className="mt-4">
           Sign Up
           <Icon
             icon="material-symbols:arrow-right-alt-rounded"
@@ -90,16 +100,3 @@
     <img src={heroImg} alt="" class="w-full h-full object-cover" />
   </div>
 </div>
-
-<style>
-  /* #accept-policy {
-    border-radius: 6px;
-    vertical-align: middle;
-    -webkit-appearance: none;
-    border: 1px solid #33a3a3;
-  }
-
-  #accept-policy:checked {
-    background-color: #33a3a3;
-  } */
-</style>

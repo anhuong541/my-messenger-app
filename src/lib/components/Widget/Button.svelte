@@ -47,7 +47,7 @@
   {#if isLoading}
     <Icon
       icon="icomoon-free:spinner2"
-      class={`animate-spin ${variant === "secondary" ? "text_27326F" : "text-white"}`}
+      class={`w-6 h-6 animate-spin ${variant === "secondary" ? "text_27326F" : "text-white"}`}
     />
   {:else}
     {#if variant === "premium"}
@@ -84,6 +84,28 @@
     padding: 10px 16px;
     gap: 4px;
     cursor: pointer;
+  }
+
+  .button:disabled {
+    opacity: 30%;
+    background-color: black;
+    color: white;
+  }
+
+  .button:disabled:hover {
+    opacity: 30%;
+  }
+
+  .button:disabled:active {
+    opacity: 30%;
+  }
+
+  .button:hover {
+    opacity: 80%;
+  }
+
+  .button:active {
+    opacity: 50%;
   }
 
   .button[type="submit"],

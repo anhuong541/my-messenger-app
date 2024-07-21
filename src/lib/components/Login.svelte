@@ -1,21 +1,33 @@
 <script>
-  import Icon from "@iconify/svelte";
-
   import heroImg from "$lib/assets/hero-img-chat-app.jpg";
+
+  import Icon from "@iconify/svelte";
   import Button from "./Widget/Button.svelte";
-  import { loginState } from "$lib/utils/store";
-  import { auth, user } from "$lib/utils/firebase";
+  import { isLoading, loginState } from "$lib/utils/store";
+  import { user } from "$lib/utils/firebase";
+  import { onSubmitUserAction, signOut } from "$lib/utils/databaseAction";
+
+  let email = "";
+  let password = "";
 
   $: console.log("login user: ", $user);
+
+  const onSubmit = async () => {
+    await onSubmitUserAction(email, password);
+    email = "";
+    password = "";
+
+    console.log("it trigger!!!!");
+  };
 </script>
 
 <div
-  class="m-auto w-4/5 h-4/5 grid grid-cols-3 gap-8 rounded-xl overflow-hidden p-8 bg-white"
+  class="m-auto w-4/5 h-4/5 grid grid-cols-3 gap-8 rounded-2xl overflow-hidden p-8 bg-white"
 >
   <div class="h-full col-span-1 flex flex-col gap-12 justify-center my-auto">
     <h1 class="text-4xl font-semibold">Sign In</h1>
     <div class="flex flex-col gap-4">
-      <form action="" class="flex flex-col gap-4">
+      <form class="flex flex-col gap-4" on:submit={onSubmit}>
         <label for="user-email" class="relative">
           <Icon
             icon="material-symbols:mail-outline"
@@ -26,6 +38,7 @@
             name="user-email"
             id="user-email"
             placeholder="Email"
+            bind:value={email}
             class="border py-3 px-6 pl-12 rounded-xl w-full"
           />
         </label>
@@ -39,11 +52,17 @@
             name="user-password"
             id="user-password"
             placeholder="Password"
+            bind:value={password}
             class="border py-3 px-6 pl-12 rounded-xl w-full"
           />
         </label>
 
-        <Button type="submit" className="mt-4">
+        <Button
+          type="submit"
+          className="mt-4"
+          isLoading={$isLoading}
+          disabled={email !== "" && password !== "" ? false : true}
+        >
           Access My Account
           <Icon
             icon="material-symbols:arrow-right-alt-rounded"
@@ -62,19 +81,8 @@
         Register
       </button>
     </div>
-    <div>
-      <button
-        class="px-4 py-1 bg-primaryColor-200 rounded-xl"
-        on:click={() => auth.signOut()}
-      >
-        Signout Demo
-      </button>
-    </div>
   </div>
   <div class="col-span-2 overflow-hidden rounded-2xl">
     <img src={heroImg} alt="" class="w-full h-full object-cover" />
   </div>
 </div>
-
-<style>
-</style>

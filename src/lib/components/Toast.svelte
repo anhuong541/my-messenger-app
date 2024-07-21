@@ -1,5 +1,6 @@
 <script lang="ts">
   import { showToast, toastMsg, toastStatus } from "$lib/utils/store";
+  import { slide } from "svelte/transition";
   import {
     BanOutline,
     CheckOutline,
@@ -20,9 +21,17 @@
   ) as ColorVariant;
 </script>
 
-{#if $showToast}
-  <Toast color={toastColor} dismissable={false} position="top-right">
-    <svelte:fragment slot="icon">
+<Toast
+  color={toastColor}
+  position="top-right"
+  transition={slide}
+  bind:toastStatus={$showToast}
+>
+  <div class="flex items-center gap-2">
+    <div
+      color={toastColor}
+      class={`flex flex-shrink-0 justify-center items-center p-1 w-8 h-8 rounded-lg bg-${toastColor}-100 text-${toastColor}-500`}
+    >
       {#if $toastStatus === "success"}
         <CheckOutline />
       {:else if $toastStatus === "error"}
@@ -32,7 +41,8 @@
       {:else}
         <BanOutline />
       {/if}
-    </svelte:fragment>
+    </div>
+
     {$toastMsg}
-  </Toast>
-{/if}
+  </div>
+</Toast>

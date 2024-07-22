@@ -10,12 +10,17 @@ import { goto } from "$app/navigation";
 
 export const onSubmitUserAction = async (email: string, password: string) => {
   if (email !== "" && password !== "") {
+    let userResponse = null;
     isLoading.set(true);
     let onPageSignin: LoginStateType = "signin";
     let onError = false;
     loginState.subscribe((value) => (onPageSignin = value));
     if (onPageSignin === "signin") {
-      await signInWithEmailAndPassword(auth, email, password).catch((error) => {
+      userResponse = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      ).catch((error) => {
         console.log("login error: ", error);
         onError = true;
         triggerToast(
@@ -24,21 +29,24 @@ export const onSubmitUserAction = async (email: string, password: string) => {
         );
       });
     } else {
-      await createUserWithEmailAndPassword(auth, email, password).catch(
-        (error) => {
-          console.log("sign up error: ", error);
-          onError = true;
-          triggerToast(
-            "Something went wrong during register. Please check your email and try again",
-            "error"
-          );
-        }
-      );
+      userResponse = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      ).catch((error) => {
+        console.log("sign up error: ", error);
+        onError = true;
+        triggerToast(
+          "Something went wrong during register. Please check your email and try again",
+          "error"
+        );
+      });
     }
     if (!onError) {
       goto("/chat");
     }
     isLoading.set(false);
+    return userResponse;
   } else {
     triggerToast("Please your email or password", "warning");
   }

@@ -1,8 +1,17 @@
 <script lang="ts">
-  import dayjs from "dayjs";
   import lukaModric from "$lib/assets/luka-modric-avatar.jpg";
   import user from "$lib/assets/profile.jpg";
   import defaultAvatar from "$lib/assets/default-avatar.jpg";
+
+  import dayjs from "dayjs";
+  import { tick } from "svelte";
+
+  let chatsElement: any;
+
+  async function scrollToTheEnd() {
+    await tick();
+    chatsElement.scrollTo(0, chatsElement.scrollHeight);
+  }
 
   const fakeUserId = 541;
   const fakeChatMessageEvents = [
@@ -361,7 +370,10 @@
 </script>
 
 <div class="h-full overflow-hidden">
-  <div class="flex-grow h-[78vh] flex flex-col gap-2 overflow-y-auto px-4">
+  <div
+    class="flex-grow h-[78vh] flex flex-col gap-2 overflow-y-auto px-4"
+    bind:this={chatsElement}
+  >
     {#each fakeChatMessageEvents ?? [] as message, index}
       {#if fakeUserId !== message?.userId}
         <div class="flex justify-start items-end gap-4 sm:pr-20 pr-16">

@@ -16,9 +16,12 @@
     </ul>
   </nav>
   <div class="flex items-center justify-end gap-4">
-    <div class="flex rounded-full bg-gray-200 w-12 h-12">
+    <button class="flex rounded-full bg-gray-200 w-12 h-12">
       <Icon icon="mi:add" class="w-6 h-6 m-auto" />
-    </div>
+    </button>
+    <button class="flex rounded-full bg-gray-200 w-12 h-12" on:click={signOut}>
+      <Icon icon="material-symbols:logout-rounded" class="w-6 h-6 m-auto" />
+    </button>
     <Avatar src={profile} rounded class="h-12 w-12" />
   </div>
 </header>

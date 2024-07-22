@@ -18,3 +18,16 @@ export const triggerToast = async (msg: string, status: ToastStatusType) => {
   await wait(toastTimeout);
   showToast.set(false);
 };
+
+export function handleFileChange(event: any) {
+  const selectedFile = event.target.files[0];
+  console.log({ selectedFile });
+  if (selectedFile) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const fileData = e?.target?.result;
+      console.log(fileData); // Process the file data here
+    };
+    reader.readAsText(selectedFile); // For text files, or readAsDataURL/readAsArrayBuffer for other types
+  }
+}

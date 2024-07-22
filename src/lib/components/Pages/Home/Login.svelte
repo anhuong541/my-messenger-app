@@ -10,8 +10,6 @@
   let email = "";
   let password = "";
 
-  $: console.log("login user: ", $user);
-
   const onSubmit = async () => {
     await onSubmitUserAction(email, password);
     email = "";
@@ -80,14 +78,14 @@
       </button>
     </div>
 
-    <div>
+    <!-- <div>
       <button
         class="py-1 px-2 hover:underline text-primaryColor-700 hover:text-primaryColor-500"
         on:click={signOut}
       >
         sign out demo
       </button>
-    </div>
+    </div> -->
   </div>
   <div class="col-span-2 overflow-hidden rounded-2xl">
     <img src={heroImg} alt="" class="w-full h-full object-cover" />

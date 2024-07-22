@@ -371,7 +371,7 @@
 
 <div class="h-full overflow-hidden">
   <div
-    class="flex-grow h-[78vh] flex flex-col gap-2 overflow-y-auto px-4"
+    class="flex-grow h-[78vh] flex flex-col gap-2 overflow-y-auto px-4 py-2"
     bind:this={chatsElement}
   >
     {#each fakeChatMessageEvents ?? [] as message, index}

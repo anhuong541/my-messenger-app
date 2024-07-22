@@ -4,6 +4,7 @@
 
   import profile from "$lib/assets/default-avatar.webp";
   import Icon from "@iconify/svelte";
+  import { user } from "$lib/utils/firebase";
 </script>
 
 <!-- header -->
@@ -16,12 +17,20 @@
     </ul>
   </nav>
   <div class="flex items-center justify-end gap-4">
-    <button class="flex rounded-full bg-gray-200 w-12 h-12">
+    <button class="flex rounded-full bg-gray-100 w-12 h-12">
       <Icon icon="mi:add" class="w-6 h-6 m-auto" />
     </button>
-    <button class="flex rounded-full bg-gray-200 w-12 h-12" on:click={signOut}>
+    <button class="flex rounded-full bg-gray-100 w-12 h-12" on:click={signOut}>
       <Icon icon="material-symbols:logout-rounded" class="w-6 h-6 m-auto" />
     </button>
-    <Avatar src={profile} rounded class="h-12 w-12" />
+    <div
+      class="flex items-center bg-primaryColor-500 text-white h-12 rounded-full overflow-hidden"
+    >
+      <p class="m-auto pl-4 pr-2">
+        {$user?.uid ?? "Loading User..."}
+        <!-- xem collection để đọc username -->
+      </p>
+      <Avatar src={profile} class="h-12 w-12 m-auto" />
+    </div>
   </div>
 </header>

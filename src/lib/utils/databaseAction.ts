@@ -2,12 +2,12 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth, firestore } from "./firebase";
+import { auth, firestore, user } from "./firebase";
 import { isLoading, loginState } from "./store";
 import type { LoginStateType } from "$lib/types/stores-type";
 import { triggerToast } from ".";
 import { goto } from "$app/navigation";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 
 export const onSubmitUserAction = async (email: string, password: string) => {
   if (email !== "" && password !== "") {
@@ -29,6 +29,8 @@ export const onSubmitUserAction = async (email: string, password: string) => {
           "error"
         );
       });
+
+      await updateUserOnlineState(userResponse?.user?.uid ?? "", true);
     } else {
       userResponse = await createUserWithEmailAndPassword(
         auth,
@@ -47,7 +49,7 @@ export const onSubmitUserAction = async (email: string, password: string) => {
       goto("/chat");
     }
     isLoading.set(false);
-    return userResponse;
+    return userResponse ?? null;
   } else {
     triggerToast("Please your email or password", "warning");
   }
@@ -60,7 +62,17 @@ export const setFirebaseDocumentAction = async (
   await setDoc(doc(firestore, location), dataInput);
 };
 
+export const updateUserOnlineState = async (uid: string, state: boolean) => {
+  const userRef = doc(firestore, `users/${uid}`);
+  await updateDoc(userRef, {
+    online: state,
+  });
+};
+
 export const signOut = async () => {
+  let userUid;
+  user.subscribe((e) => (userUid = e?.uid));
+  await updateUserOnlineState(userUid ?? "", false);
   await auth.signOut();
   goto("/");
 };

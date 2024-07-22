@@ -6,8 +6,10 @@
   import dayjs from "dayjs";
   import Icon from "@iconify/svelte";
   import { Avatar, Input } from "flowbite-svelte";
+  import AddFriendModal from "../../Modals/AddFriendModal.svelte";
 
-  let chooseTypeFriendList: "personal" | "business" = "personal";
+  let chooseTypeFriendList: "friends" | "friends_request" = "friends";
+  let openAddFriendModal: boolean = false;
 
   const fakeFriendsList = [
     {
@@ -37,25 +39,28 @@
 <div class="col-span-3 flex flex-col border-r h-full">
   <div class="flex justify-between items-center border-b px-4 h-[70px]">
     <h3 class="font-semibold text-lg">Messages</h3>
-    <button class="rounded-full w-10 h-10 bg-gray-100">
+    <button
+      class="rounded-full w-10 h-10 bg-gray-100"
+      on:click={() => (openAddFriendModal = !openAddFriendModal)}
+    >
       <Icon
-        icon="material-symbols:edit-square-outline"
+        icon="material-symbols:person-add-outline-rounded"
         class="h-6 w-6 m-auto"
       />
     </button>
   </div>
   <div class="flex justify-between font-medium border-b">
     <button
-      class={`flex items-center justify-center w-full py-3 transition-all duration-300 animate-shock ${chooseTypeFriendList === "personal" ? "border-b-2 border-black" : ""}`}
-      on:click={() => (chooseTypeFriendList = "personal")}
+      class={`flex items-center justify-center w-full py-3 transition-all duration-300 animate-shock ${chooseTypeFriendList === "friends" ? "border-b-2 border-black" : ""}`}
+      on:click={() => (chooseTypeFriendList = "friends")}
     >
-      Personal
+      Friends
     </button>
     <button
-      class={`flex items-center justify-center w-full py-3 transition-all duration-300 animate-shock ${chooseTypeFriendList === "business" ? "border-b-2 border-black" : ""}`}
-      on:click={() => (chooseTypeFriendList = "business")}
+      class={`flex items-center justify-center w-full py-3 transition-all duration-300 animate-shock ${chooseTypeFriendList === "friends_request" ? "border-b-2 border-black" : ""}`}
+      on:click={() => (chooseTypeFriendList = "friends_request")}
     >
-      Business
+      Friends Request
     </button>
   </div>
   <div class="flex flex-col gap-4 py-4 w-full">
@@ -99,6 +104,10 @@
     </div>
   </div>
 </div>
+
+<AddFriendModal bind:openModal={openAddFriendModal}>
+  Some thing!!!
+</AddFriendModal>
 
 <style>
 </style>

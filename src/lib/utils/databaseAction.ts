@@ -2,11 +2,12 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth, firestore } from "./firebase";
 import { isLoading, loginState } from "./store";
 import type { LoginStateType } from "$lib/types/stores-type";
 import { triggerToast } from ".";
 import { goto } from "$app/navigation";
+import { doc, setDoc } from "firebase/firestore";
 
 export const onSubmitUserAction = async (email: string, password: string) => {
   if (email !== "" && password !== "") {
@@ -50,6 +51,13 @@ export const onSubmitUserAction = async (email: string, password: string) => {
   } else {
     triggerToast("Please your email or password", "warning");
   }
+};
+
+export const setFirebaseDocumentAction = async (
+  dataInput: any,
+  location: string
+) => {
+  await setDoc(doc(firestore, location), dataInput);
 };
 
 export const signOut = async () => {

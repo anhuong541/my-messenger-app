@@ -4,11 +4,11 @@
   import heroImg from "$lib/assets/hero-img-chat-app.jpg";
   import Button from "../../Widget/Button.svelte";
   import { isLoading, loginState } from "$lib/utils/store";
-  import { onSubmitUserAction } from "$lib/utils/databaseAction";
+  import {
+    onSubmitUserAction,
+    setFirebaseDocumentAction,
+  } from "$lib/utils/databaseAction";
   import { handleFileChange, triggerToast } from "$lib/utils";
-  import { Collection } from "sveltefire";
-  import { doc, setDoc } from "firebase/firestore";
-  import { firestore } from "$lib/utils/firebase";
 
   let email = "";
   let password = "";
@@ -30,20 +30,28 @@
     let res = null;
     if (password === confirmPassword) {
       res = await onSubmitUserAction(email, password);
+
+      const data = {
+        uid: res?.user?.uid ?? "error",
+        username,
+        date: Date.now(),
+        online: true,
+        email: res?.user?.email ?? "???@gmail.com",
+        gender,
+      };
+
+      await setFirebaseDocumentAction(
+        data,
+        `users/${res?.user?.uid ?? "error"}`
+      );
+
       email = "";
       password = "";
+      username = "";
+      gender = "";
     } else {
       triggerToast("Your passwords does not match", "warning");
     }
-
-    await setDoc(doc(firestore, "users", res?.user?.uid ?? "error"), {
-      uid: res?.user?.uid ?? "error",
-      username,
-      date: Date.now(),
-      online: true,
-      email,
-      gender,
-    });
   };
 </script>
 

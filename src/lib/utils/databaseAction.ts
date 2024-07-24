@@ -63,7 +63,7 @@ export const setFirebaseDocumentAction = async (
 };
 
 export const updateUserOnlineState = async (uid: string, state: boolean) => {
-  const userRef = doc(firestore, `users/${uid}`);
+  const userRef = doc(firestore, `/users/${uid}`);
   await updateDoc(userRef, {
     online: state,
   });

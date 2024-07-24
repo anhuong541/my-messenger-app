@@ -42,7 +42,7 @@
 
       await setFirebaseDocumentAction(
         data,
-        `users/${res?.user?.uid ?? "error"}`
+        `/users/${res?.user?.uid ?? "error"}`
       );
 
       email = "";

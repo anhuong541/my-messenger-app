@@ -1,53 +1,112 @@
 <script lang="ts">
   import fakeImg1 from "$lib/assets/luka-modric-avatar.jpg";
-  import fakeImg2 from "$lib/assets/default-avatar.webp";
+  import defaultImg from "$lib/assets/default-avatar.webp";
   import fakeImg3 from "$lib/assets/profile.jpg";
 
   import dayjs from "dayjs";
   import Icon from "@iconify/svelte";
   import { Avatar, Input } from "flowbite-svelte";
   import AddFriendModal from "../../Modals/AddFriendModal.svelte";
+  import { firestore, user } from "$lib/utils/firebase";
+  import { collectionStore, docStore } from "sveltefire";
+  import Button from "$lib/components/Widget/Button.svelte";
+  import { collection, deleteDoc, doc, setDoc } from "firebase/firestore";
+  import { generateChatRoomId } from "$lib/utils";
 
-  let chooseTypeFriendList: "friends" | "friends_request" = "friends";
+  let chooseTypeFriendList: "friends" | "friends_request" = "friends"; // change to personal and business later
   let openAddFriendModal: boolean = false;
+  let fetchFriendsList;
+  let fetchFriendsRequestList;
+  let friendsRequestList: any = [];
+  let friendsList: any = [];
+  let isFetchedFriendsListData = false;
 
-  const fakeFriendsList = [
-    {
-      name: "Bruno Mark",
-      image: fakeImg1,
-      lastMsg: "Nice to see ya!",
-      online: true,
-      lastTimeMsg: 1721560240,
-    },
-    {
-      name: "John Lengend",
-      image: fakeImg2,
-      lastMsg: "See you again! Hope you have all the asjofbabo luck!!!!",
-      online: false,
-      lastTimeMsg: 1721559088,
-    },
-    {
-      name: "Luke Modric",
-      image: fakeImg3,
-      lastMsg: "Good News!",
-      online: false,
-      lastTimeMsg: 1721556628,
-    },
-  ];
+  const onAcceptFriendRequest = async (selectedUid: string) => {
+    if ($user) {
+      const friendsRef = collection(firestore, "users", $user?.uid, "friends");
+      const selectedUidFriendsRef = collection(
+        firestore,
+        "users",
+        selectedUid,
+        "friends"
+      );
+      const friendsRequestRef = collection(
+        firestore,
+        "users",
+        $user?.uid,
+        "friends_request"
+      );
+      const addNewChatRoomId = collection(firestore, "chat_rooms");
+      const chatRoomId = generateChatRoomId();
+      await setDoc(doc(friendsRef, selectedUid), {
+        chatRoomId,
+      });
+      await setDoc(doc(selectedUidFriendsRef, $user?.uid), {
+        chatRoomId,
+      });
+      await deleteDoc(doc(friendsRequestRef, selectedUid));
+      await setDoc(doc(addNewChatRoomId, chatRoomId), {
+        chatRoomId,
+        userUid1: $user?.uid,
+        userUid2: selectedUid,
+        createAt: Date.now(),
+      });
+    }
+  };
+
+  const onDeleteFriendRequest = async (selectedUid: string) => {
+    if ($user) {
+      const friendsRequestRef = collection(
+        firestore,
+        "users",
+        $user?.uid,
+        "friends_request"
+      );
+      await deleteDoc(doc(friendsRequestRef, selectedUid));
+    }
+  };
+
+  $: friendsRequestList =
+    ($fetchFriendsRequestList && $fetchFriendsRequestList) ?? [];
+  $: friendsList = ($fetchFriendsList && $fetchFriendsList) ?? [];
+
+  $: {
+    if ($user && !isFetchedFriendsListData) {
+      fetchFriendsRequestList = collectionStore(
+        firestore,
+        `users/${$user.uid}/friends_request`
+      );
+      fetchFriendsList = collectionStore(
+        firestore,
+        `users/${$user.uid}/friends`
+      );
+      isFetchedFriendsListData = true;
+    }
+  }
+
+  $: console.log({ friendsList });
 </script>
 
 <div class="col-span-3 flex flex-col border-r h-full">
   <div class="flex justify-between items-center border-b px-4 h-[70px]">
     <h3 class="font-semibold text-lg">Messages</h3>
-    <button
-      class="rounded-full w-10 h-10 bg-gray-100"
-      on:click={() => (openAddFriendModal = !openAddFriendModal)}
-    >
-      <Icon
-        icon="material-symbols:person-add-outline-rounded"
-        class="h-6 w-6 m-auto"
-      />
-    </button>
+    <div class="flex justify-end items-center gap-2">
+      <button class="rounded-full w-10 h-10 bg-gray-100" on:click={() => {}}>
+        <Icon
+          icon="material-symbols:person-add-outline-rounded"
+          class="h-6 w-6 m-auto"
+        />
+      </button>
+      <button
+        class="rounded-full w-10 h-10 bg-gray-100"
+        on:click={() => (openAddFriendModal = !openAddFriendModal)}
+      >
+        <Icon
+          icon="material-symbols:person-search-outline-rounded"
+          class="h-6 w-6 m-auto"
+        />
+      </button>
+    </div>
   </div>
   <div class="flex justify-between font-medium border-b">
     <button
@@ -60,7 +119,7 @@
       class={`flex items-center justify-center w-full py-3 transition-all duration-300 animate-shock ${chooseTypeFriendList === "friends_request" ? "border-b-2 border-black" : ""}`}
       on:click={() => (chooseTypeFriendList = "friends_request")}
     >
-      Friends Request
+      Friend Requests
     </button>
   </div>
   <div class="flex flex-col gap-4 py-4 w-full">
@@ -78,36 +137,71 @@
       />
     </label>
     <div class="flex flex-col gap-2 px-2">
-      {#each fakeFriendsList as friend}
-        <div
-          class="flex items-center gap-2 w-full px-2 py-3 hover:bg-gray-200 active:bg-gray-100 rounded-md cursor-pointer"
-        >
-          <Avatar src={friend.image} class="h-12 w-12 rounded-full" />
-          <div class="flex flex-col justify-center w-full overflow-hidden">
-            <h4>{friend.name}</h4>
-            <p
-              class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
-            >
-              {friend.lastMsg}
-            </p>
-            <div class="flex justify-between w-full gap-1 text-sm">
-              <p class={`${friend.online ? "text-green-500" : "text-red-500"}`}>
-                {friend.online ? "Online" : "Offline"}
+      {#if chooseTypeFriendList === "friends"}
+        {#each [] as friend}
+          <div
+            class="flex items-center gap-2 w-full px-2 py-3 hover:bg-gray-200 active:bg-gray-100 rounded-md cursor-pointer"
+          >
+            <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />
+            <div class="flex flex-col justify-center w-full overflow-hidden">
+              <h4>{friend?.username ?? ""}</h4>
+              <p
+                class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
+              >
+                {friend?.email ?? ""}
               </p>
-              <p class="text-gray-500 text-xs">
-                {dayjs(friend.lastTimeMsg).format("DD-MM")}
-              </p>
+              <div class="flex justify-between w-full gap-1 text-sm">
+                <p
+                  class={`${friend?.online ? "text-green-500" : "text-red-500"}`}
+                >
+                  {friend?.online ? "Online" : "Offline"}
+                </p>
+                <p class="text-gray-500 text-xs">
+                  {dayjs(friend?.lastTimeMsg ?? "").format("DD-MM")}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      {/each}
+        {/each}
+      {:else}
+        {#each friendsRequestList ?? [] as friend}
+          <div
+            class="flex items-center gap-2 w-full px-2 py-3 hover:bg-gray-200 active:bg-gray-100 rounded-md cursor-pointer"
+          >
+            <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />
+            <div class="flex flex-col justify-center w-full overflow-hidden">
+              <h4>{friend.username}</h4>
+              <p
+                class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
+              >
+                {friend.email}
+              </p>
+              <div class="flex items-center w-full gap-1 text-sm">
+                <p class="text-green-500">
+                  {friend.gender}
+                </p>
+              </div>
+            </div>
+            <Button
+              className="!w-[100px]"
+              on:click={async () => onAcceptFriendRequest(friend.uid)}
+            >
+              Accept
+            </Button>
+            <Button
+              className="!w-[100px]"
+              on:click={async () => onDeleteFriendRequest(friend.uid)}
+            >
+              Delete
+            </Button>
+          </div>
+        {/each}
+      {/if}
     </div>
   </div>
 </div>
 
-<AddFriendModal bind:openModal={openAddFriendModal}>
-  Some thing!!!
-</AddFriendModal>
+<AddFriendModal bind:openModal={openAddFriendModal} />
 
 <style>
 </style>

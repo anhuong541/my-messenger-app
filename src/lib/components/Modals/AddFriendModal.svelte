@@ -2,25 +2,53 @@
   import { Input, Modal } from "flowbite-svelte";
   import Button from "../Widget/Button.svelte";
   import Icon from "@iconify/svelte";
-  import { firestore } from "$lib/utils/firebase";
+  import { auth, firestore, user } from "$lib/utils/firebase";
   import { collectionStore } from "sveltefire";
-  import { collection, getDocs } from "firebase/firestore";
+  import { onMount } from "svelte";
+  import { collection, doc, setDoc } from "firebase/firestore";
 
-  export let openModal = false;
+  export let openModal = true;
 
-  let uidTyped = "";
+  let uidTyped: string = "";
   let isSearching = false;
+  let collectionUser: any;
+  let listFriendRequestSended = [];
 
-  const handleSearchUid = async () => {
-    isSearching = true;
-    let collectionUsers = await getDocs(collection(firestore, "users"));
-    console.log({ colUsers: collectionUsers });
+  const sendFriendRequest = async () => {
+    const userData =
+      $collectionUser &&
+      $collectionUser.find((item: any) => item?.uid === $user?.uid);
 
-    isSearching = false;
+    const userRequestRef = collection(
+      firestore,
+      "users",
+      userFilterd?.uid,
+      "friends_request"
+    );
+
+    await setDoc(doc(userRequestRef, $user?.uid), {
+      uid: userData?.uid,
+      email: userData?.email,
+      username: userData?.username,
+      gender: userData?.gender,
+    });
   };
+
+  $: userFilterd =
+    $collectionUser &&
+    $collectionUser.find((item: any) => item?.uid === uidTyped);
+
+  $: isUser = $user?.uid === userFilterd?.uid ?? false;
+
+  onMount(() => {
+    // take user data
+    isSearching = true;
+    collectionUser = collectionStore(firestore, "users");
+    isSearching = false;
+  });
 </script>
 
-<Modal title="New Contact" bind:open={openModal} autoclose>
+<Modal title="New Contact" bind:open={openModal}>
   <label for="search-friends" class="relative">
     <Icon
       icon="material-symbols:search-rounded"
@@ -31,11 +59,32 @@
       id="search"
       name="search"
       placeholder="Type their uid"
+      bind:value={uidTyped}
       class="border py-3 px-6 pl-12 rounded-xl w-full"
     />
   </label>
 
-  <div>Not found!</div>
+  {#if userFilterd}
+    <div class="flex flex-col gap-2 border p-2 rounded-xl">
+      <p>Uid: {userFilterd?.id}</p>
+      <p>Username: {userFilterd?.username}</p>
+      <p>Email: {userFilterd?.email}</p>
+      <p>Gender: {userFilterd?.gender}</p>
+    </div>
+  {:else}
+    <p class="text-red-500">User ID not found or not provided</p>
+  {/if}
 
-  <Button on:click={handleSearchUid}>Search</Button>
+  <div class="flex justify-end items-center gap-4">
+    {#if userFilterd}
+      <Button
+        className="!w-[140px]"
+        on:click={sendFriendRequest}
+        isLoading={isSearching}
+        disabled={isUser}
+      >
+        {isUser ? "It's you" : "Add Friend"}
+      </Button>
+    {/if}
+  </div>
 </Modal>

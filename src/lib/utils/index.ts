@@ -1,5 +1,6 @@
 import type { ToastStatusType } from "$lib/types/stores-type";
 import { showToast, toastMsg, toastStatus } from "./store";
+import { v6 as uuidv6 } from "uuid";
 
 let toastTimeout = 2000;
 
@@ -30,4 +31,8 @@ export function handleFileChange(event: any) {
     };
     reader.readAsText(selectedFile); // For text files, or readAsDataURL/readAsArrayBuffer for other types
   }
+}
+
+export function generateChatRoomId() {
+  return uuidv6();
 }

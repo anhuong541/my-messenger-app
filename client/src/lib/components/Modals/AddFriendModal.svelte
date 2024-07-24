@@ -2,22 +2,17 @@
   import { Input, Modal } from "flowbite-svelte";
   import Button from "../Widget/Button.svelte";
   import Icon from "@iconify/svelte";
-  import { auth, firestore, user } from "$lib/utils/firebase";
-  import { collectionStore } from "sveltefire";
-  import { onMount } from "svelte";
+  import { firestore, user } from "$lib/utils/firebase";
   import { collection, doc, setDoc } from "firebase/firestore";
 
   export let openModal = true;
+  export let usersData;
 
   let uidTyped: string = "";
-  let isSearching = false;
-  let collectionUser: any;
   let listFriendRequestSended = [];
 
   const sendFriendRequest = async () => {
-    const userData =
-      $collectionUser &&
-      $collectionUser.find((item: any) => item?.uid === $user?.uid);
+    const userData = usersData.find((item: any) => item?.uid === $user?.uid);
 
     const userRequestRef = collection(
       firestore,
@@ -34,18 +29,9 @@
     });
   };
 
-  $: userFilterd =
-    $collectionUser &&
-    $collectionUser.find((item: any) => item?.uid === uidTyped);
+  $: userFilterd = usersData.find((item: any) => item?.uid === uidTyped);
 
   $: isUser = $user?.uid === userFilterd?.uid ?? false;
-
-  onMount(() => {
-    // take user data
-    isSearching = true;
-    collectionUser = collectionStore(firestore, "users");
-    isSearching = false;
-  });
 </script>
 
 <Modal title="New Contact" bind:open={openModal}>
@@ -80,7 +66,6 @@
       <Button
         className="!w-[140px]"
         on:click={sendFriendRequest}
-        isLoading={isSearching}
         disabled={isUser}
       >
         {isUser ? "It's you" : "Add Friend"}

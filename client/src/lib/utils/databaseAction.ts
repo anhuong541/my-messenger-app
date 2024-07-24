@@ -8,6 +8,7 @@ import type { LoginStateType } from "$lib/types/stores-type";
 import { triggerToast } from ".";
 import { goto } from "$app/navigation";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { usersList } from "./dataStore";
 
 export const onSubmitUserAction = async (email: string, password: string) => {
   if (email !== "" && password !== "") {
@@ -69,10 +70,15 @@ export const updateUserOnlineState = async (uid: string, state: boolean) => {
   });
 };
 
+export const clearUserData = () => {
+  usersList.set([]);
+};
+
 export const signOut = async () => {
   let userUid;
   user.subscribe((e) => (userUid = e?.uid));
   await updateUserOnlineState(userUid ?? "", false);
+  clearUserData();
   await auth.signOut();
   goto("/");
 };

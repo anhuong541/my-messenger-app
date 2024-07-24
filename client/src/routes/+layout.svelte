@@ -2,9 +2,9 @@
   import { browser } from "$app/environment";
   import { goto } from "$app/navigation";
   import Toast from "$lib/components/Toast.svelte";
+  import Provider from "$lib/providers/Provider.svelte";
   import "$lib/styles/app.css";
-  import { auth, firestore, user } from "$lib/utils/firebase";
-  import { FirebaseApp } from "sveltefire";
+  import { user } from "$lib/utils/firebase";
 
   $: {
     if (browser) {
@@ -13,10 +13,10 @@
   }
 </script>
 
-<FirebaseApp {auth} {firestore}>
+<Provider>
   <slot />
   <Toast />
-</FirebaseApp>
+</Provider>
 
 <style lang="postcss">
   :global(html) {

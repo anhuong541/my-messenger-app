@@ -12,6 +12,9 @@
   import Button from "$lib/components/Widget/Button.svelte";
   import { collection, deleteDoc, doc, setDoc } from "firebase/firestore";
   import { generateChatRoomId } from "$lib/utils";
+  import { onMount } from "svelte";
+  import { usersList } from "$lib/utils/dataStore";
+  import { selectedChatroomId } from "$lib/utils/store";
 
   let chooseTypeFriendList: "friends" | "friends_request" = "friends"; // change to personal and business later
   let openAddFriendModal: boolean = false;
@@ -20,6 +23,7 @@
   let friendsRequestList: any = [];
   let friendsList: any = [];
   let isFetchedFriendsListData = false;
+  let collectionUser;
 
   const onAcceptFriendRequest = async (selectedUid: string) => {
     if ($user) {
@@ -68,7 +72,27 @@
 
   $: friendsRequestList =
     ($fetchFriendsRequestList && $fetchFriendsRequestList) ?? [];
-  $: friendsList = ($fetchFriendsList && $fetchFriendsList) ?? [];
+
+  $: {
+    if ($fetchFriendsList && $collectionUser) {
+      const friendList = $fetchFriendsList as any;
+      const usersListCol = $collectionUser as any;
+      const friendListById = friendList.map((item: any) => item.id);
+      friendsList = usersListCol
+        .map((item: any) => {
+          if (friendListById.includes(item?.uid)) {
+            const chatRoomId = friendList.find(
+              (element: any) => element?.id === item?.uid
+            ).chatRoomId;
+            return {
+              ...item,
+              chatRoomId,
+            };
+          }
+        })
+        .filter(Boolean);
+    }
+  }
 
   $: {
     if ($user && !isFetchedFriendsListData) {
@@ -84,7 +108,18 @@
     }
   }
 
-  $: console.log({ friendsList });
+  onMount(() => {
+    // take user data
+    collectionUser = collectionStore(firestore, "users");
+  });
+
+  $: {
+    if ($collectionUser) {
+      usersList.set($collectionUser);
+    }
+  }
+
+  $: console.log("chatRoomId: ", $selectedChatroomId);
 </script>
 
 <div class="col-span-3 flex flex-col border-r h-full">
@@ -138,17 +173,20 @@
     </label>
     <div class="flex flex-col gap-2 px-2">
       {#if chooseTypeFriendList === "friends"}
-        {#each [] as friend}
+        {#each friendsList ?? [] as friend}
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
             class="flex items-center gap-2 w-full px-2 py-3 hover:bg-gray-200 active:bg-gray-100 rounded-md cursor-pointer"
+            on:click={() => selectedChatroomId.set(friend.chatRoomId)}
           >
             <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />
             <div class="flex flex-col justify-center w-full overflow-hidden">
-              <h4>{friend?.username ?? ""}</h4>
+              <h4>{friend.username}</h4>
               <p
                 class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
               >
-                {friend?.email ?? ""}
+                {friend.email}
               </p>
               <div class="flex justify-between w-full gap-1 text-sm">
                 <p
@@ -157,7 +195,7 @@
                   {friend?.online ? "Online" : "Offline"}
                 </p>
                 <p class="text-gray-500 text-xs">
-                  {dayjs(friend?.lastTimeMsg ?? "").format("DD-MM")}
+                  {dayjs(friend.lastTimeMsg).format("DD-MM")}
                 </p>
               </div>
             </div>
@@ -201,7 +239,10 @@
   </div>
 </div>
 
-<AddFriendModal bind:openModal={openAddFriendModal} />
+<AddFriendModal
+  bind:openModal={openAddFriendModal}
+  usersData={$collectionUser ?? []}
+/>
 
 <style>
 </style>

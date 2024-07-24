@@ -6,3 +6,4 @@ export const isLoading = writable(false);
 export const showToast = writable(false);
 export const toastMsg = writable("");
 export const toastStatus = writable<ToastStatusType>("success");
+export const selectedChatroomId = writable("");

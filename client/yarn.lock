@@ -707,6 +707,18 @@
     prism-svelte "0.5.0"
     prismjs "1.28.0"
 
+"@tanstack/query-core@5.51.9":
+  version "5.51.9"
+  resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.51.9.tgz"
+  integrity sha512-HsAwaY5J19MD18ykZDS3aVVh+bAt0i7m6uQlFC2b77DLV9djo+xEN7MWQAQQTR8IM+7r/zbozTQ7P0xr0bHuew==
+
+"@tanstack/svelte-query@^5.51.11":
+  version "5.51.11"
+  resolved "https://registry.npmjs.org/@tanstack/svelte-query/-/svelte-query-5.51.11.tgz"
+  integrity sha512-p4gW0yEH/dfkU56HPm2ZjgGj4qvMw4TZeSuI3wsYGnnX8ZbSL9V6HKV4GJA/LJroaXI/S02hPJfgWcpQAztj5Q==
+  dependencies:
+    "@tanstack/query-core" "5.51.9"
+
 "@types/cookie@^0.6.0":
   version "0.6.0"
   resolved "https://registry.npmjs.org/@types/cookie/-/cookie-0.6.0.tgz"
@@ -2118,7 +2130,7 @@ svelte-preprocess@^5.1.3:
     sorcery "^0.11.0"
     strip-indent "^3.0.0"
 
-"svelte@^3.19.0 || ^4.0.0", "svelte@^3.23.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0", "svelte@^3.54.0 || ^4.0.0 || ^5.0.0", "svelte@^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0", "svelte@^3.55.1 || ^4.0.0 || ^5.0.0", svelte@^4.0.0, "svelte@^4.0.0 || ^5.0.0-next.0", svelte@^4.2.18, "svelte@>=3.35.0 || ^4.0.0 || ^5.0.0 || ^5.0.0-next.0", svelte@>=3.55.0, svelte@>4.0.0:
+"svelte@^3.19.0 || ^4.0.0", "svelte@^3.23.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0", "svelte@^3.54.0 || ^4.0.0 || ^5.0.0", "svelte@^3.54.0 || ^4.0.0 || ^5.0.0-next.0", "svelte@^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0", "svelte@^3.55.1 || ^4.0.0 || ^5.0.0", svelte@^4.0.0, "svelte@^4.0.0 || ^5.0.0-next.0", svelte@^4.2.18, "svelte@>=3.35.0 || ^4.0.0 || ^5.0.0 || ^5.0.0-next.0", svelte@>=3.55.0, svelte@>4.0.0:
   version "4.2.18"
   resolved "https://registry.npmjs.org/svelte/-/svelte-4.2.18.tgz"
   integrity sha512-d0FdzYIiAePqRJEb90WlJDkjUEx42xhivxN8muUBmfZnP+tzUgz12DJ2hRJi8sIHCME7jeK1PTMgKPSfTd8JrA==

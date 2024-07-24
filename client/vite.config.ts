@@ -6,6 +6,7 @@ dotenv.config();
 
 export default defineConfig({
   plugins: [sveltekit()],
+  optimizeDeps: { exclude: ["fsevents"] },
   define: {
     "process.env": process.env,
   },

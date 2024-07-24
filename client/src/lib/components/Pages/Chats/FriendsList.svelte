@@ -8,12 +8,12 @@
   import { Avatar, Input } from "flowbite-svelte";
   import AddFriendModal from "../../Modals/AddFriendModal.svelte";
   import { firestore, user } from "$lib/utils/firebase";
-  import { collectionStore, docStore } from "sveltefire";
+  import { collectionStore } from "sveltefire";
   import Button from "$lib/components/Widget/Button.svelte";
   import { collection, deleteDoc, doc, setDoc } from "firebase/firestore";
   import { generateChatRoomId } from "$lib/utils";
   import { onMount } from "svelte";
-  import { usersList } from "$lib/utils/dataStore";
+  import { userInfo, usersList } from "$lib/utils/dataStore";
   import { selectedChatroomId } from "$lib/utils/store";
 
   let chooseTypeFriendList: "friends" | "friends_request" = "friends"; // change to personal and business later
@@ -109,13 +109,22 @@
   }
 
   onMount(() => {
-    // take user data
     collectionUser = collectionStore(firestore, "users");
   });
 
   $: {
     if ($collectionUser) {
       usersList.set($collectionUser);
+    }
+  }
+
+  $: {
+    if ($user && $usersList) {
+      const res = $usersList.find((item: any) => item?.uid === $user.uid);
+      if (res) {
+        const { id, uid, username, date, gender, online, email } = res;
+        userInfo.set({ id, uid, username, date, gender, online, email });
+      }
     }
   }
 

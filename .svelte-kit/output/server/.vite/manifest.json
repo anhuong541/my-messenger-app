@@ -1,0 +1,134 @@
+{
+  ".svelte-kit/generated/server/internal.js": {
+    "file": "internal.js",
+    "name": "internal",
+    "src": ".svelte-kit/generated/server/internal.js",
+    "isEntry": true,
+    "imports": [
+      "_internal.js"
+    ]
+  },
+  "_client.js": {
+    "file": "chunks/client.js",
+    "name": "client",
+    "imports": [
+      "_exports.js"
+    ]
+  },
+  "_exports.js": {
+    "file": "chunks/exports.js",
+    "name": "exports"
+  },
+  "_firebase.js": {
+    "file": "chunks/firebase.js",
+    "name": "firebase",
+    "imports": [
+      "_ssr.js",
+      "_index.js"
+    ]
+  },
+  "_functions.js": {
+    "file": "chunks/functions.js",
+    "name": "functions",
+    "imports": [
+      "_ssr.js",
+      "_firebase.js",
+      "_index.js"
+    ]
+  },
+  "_index.js": {
+    "file": "chunks/index.js",
+    "name": "index",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_internal.js": {
+    "file": "chunks/internal.js",
+    "name": "internal",
+    "imports": [
+      "_ssr.js"
+    ]
+  },
+  "_ssr.js": {
+    "file": "chunks/ssr.js",
+    "name": "ssr"
+  },
+  "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
+    "file": "entries/fallbacks/error.svelte.js",
+    "name": "entries/fallbacks/error.svelte",
+    "src": "node_modules/@sveltejs/kit/src/runtime/components/error.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_client.js"
+    ]
+  },
+  "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
+    "file": "index.js",
+    "name": "index",
+    "src": "node_modules/@sveltejs/kit/src/runtime/server/index.js",
+    "isEntry": true,
+    "imports": [
+      "_internal.js",
+      "_exports.js",
+      "_index.js"
+    ]
+  },
+  "src/lib/assets/login-hero.webp": {
+    "file": "_app/immutable/assets/login-hero.9c9QU9ND.webp",
+    "src": "src/lib/assets/login-hero.webp"
+  },
+  "src/lib/assets/luka-modric-avatar.jpg": {
+    "file": "_app/immutable/assets/luka-modric-avatar.gM0BlL8o.jpg",
+    "src": "src/lib/assets/luka-modric-avatar.jpg"
+  },
+  "src/lib/assets/profile.jpg": {
+    "file": "_app/immutable/assets/profile.D81Tw3Dj.jpg",
+    "src": "src/lib/assets/profile.jpg"
+  },
+  "src/routes/+layout.svelte": {
+    "file": "entries/pages/_layout.svelte.js",
+    "name": "entries/pages/_layout.svelte",
+    "src": "src/routes/+layout.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_firebase.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_layout.BYMBSKU3.css"
+    ]
+  },
+  "src/routes/+page.svelte": {
+    "file": "entries/pages/_page.svelte.js",
+    "name": "entries/pages/_page.svelte",
+    "src": "src/routes/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_functions.js",
+      "src/routes/+layout.svelte",
+      "_firebase.js",
+      "_client.js"
+    ],
+    "assets": [
+      "_app/immutable/assets/login-hero.9c9QU9ND.webp"
+    ]
+  },
+  "src/routes/chat/+page.svelte": {
+    "file": "entries/pages/chat/_page.svelte.js",
+    "name": "entries/pages/chat/_page.svelte",
+    "src": "src/routes/chat/+page.svelte",
+    "isEntry": true,
+    "imports": [
+      "_ssr.js",
+      "_functions.js",
+      "_firebase.js",
+      "_client.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.r4fqqqOH.css"
+    ]
+  }
+}

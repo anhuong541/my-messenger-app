@@ -1,7 +1,5 @@
 <script lang="ts">
-  import lukaModric from "$lib/assets/luka-modric-avatar.jpg";
-  import user from "$lib/assets/profile.jpg";
-  import defaultAvatar from "$lib/assets/default-avatar.jpg";
+  import defaultAvatar from "$lib/assets/default-avatar.webp";
 
   import Button from "$lib/components/Widget/Button.svelte";
   import Icon from "@iconify/svelte";
@@ -25,7 +23,16 @@
     }
   }
 
-  $: messages = ($fetchMessageFromChatRoom && $fetchMessageFromChatRoom) ?? [];
+  const handlerFilterMessages = (messagesInput: any) => {
+    const data = messagesInput.sort((a: any, b: any) => b?.id - a?.id);
+
+    console.log({ data });
+
+    return data;
+  };
+
+  $: messages = (($fetchMessageFromChatRoom && $fetchMessageFromChatRoom) ??
+    []) as any;
   $: messageEventsSize = messages?.length ?? 0;
 
   const onUserSendMessage = async () => {
@@ -49,6 +56,8 @@
     }
   };
 
+  $: console.log({ messageEventsSize });
+
   $: console.log({ messages });
 </script>
 
@@ -59,7 +68,7 @@
       class="flex-grow flex-col-reverse h-[78vh] flex gap-2 overflow-y-auto px-4 py-2"
     >
       {#if $selectedChatroomId !== "" && $fetchMessageFromChatRoom}
-        {#each messages.reverse() ?? [] as item, index}
+        {#each handlerFilterMessages(messages) ?? [] as item, index}
           {#if $userInfo.uid !== item?.userId}
             <div class="flex justify-start items-end gap-4 sm:pr-20 pr-16">
               {#if index === messageEventsSize + 1 || item?.userId !== messages[index - 1]?.userId}

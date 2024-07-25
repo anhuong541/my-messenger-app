@@ -24,15 +24,12 @@
   }
 
   const handlerFilterMessages = (messagesInput: any) => {
-    const data = messagesInput.sort((a: any, b: any) => b?.id - a?.id);
-
-    console.log({ data });
-
-    return data;
+    return messagesInput.sort((a: any, b: any) => b?.id - a?.id);
   };
 
   $: messages = (($fetchMessageFromChatRoom && $fetchMessageFromChatRoom) ??
     []) as any;
+
   $: messageEventsSize = messages?.length ?? 0;
 
   const onUserSendMessage = async () => {
@@ -51,14 +48,9 @@
           emojis: [],
         }
       );
-
       message = "";
     }
   };
-
-  $: console.log({ messageEventsSize });
-
-  $: console.log({ messages });
 </script>
 
 <div class="flex flex-col justify-between h-full py-2">

@@ -13,7 +13,7 @@
   import { collection, deleteDoc, doc, setDoc } from "firebase/firestore";
   import { generateChatRoomId } from "$lib/utils";
   import { onMount } from "svelte";
-  import { userInfo, usersList } from "$lib/utils/dataStore";
+  import { friendSelected, userInfo, usersList } from "$lib/utils/dataStore";
   import { selectedChatroomId } from "$lib/utils/store";
 
   let chooseTypeFriendList: "friends" | "friends_request" = "friends"; // change to personal and business later
@@ -186,8 +186,11 @@
           <!-- svelte-ignore a11y-no-static-element-interactions -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
-            class="flex items-center gap-2 w-full px-2 py-3 hover:bg-gray-200 active:bg-gray-100 rounded-md cursor-pointer"
-            on:click={() => selectedChatroomId.set(friend.chatRoomId)}
+            class={`flex items-center gap-2 w-full px-2 py-3 hover:bg-gray-200 active:bg-gray-100 rounded-md cursor-pointer ${$selectedChatroomId === friend.chatRoomId ? "bg-gray-200" : ""}`}
+            on:click={() => {
+              selectedChatroomId.set(friend.chatRoomId);
+              friendSelected.set(friend);
+            }}
           >
             <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />
             <div class="flex flex-col justify-center w-full overflow-hidden">

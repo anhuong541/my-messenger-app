@@ -22,3 +22,4 @@ const initialUserInfo = {
 
 export const usersList = writable([]);
 export const userInfo = writable<UserInfoType>(initialUserInfo);
+export const friendSelected = writable<any>();

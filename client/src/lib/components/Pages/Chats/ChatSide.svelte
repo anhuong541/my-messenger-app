@@ -1,16 +1,10 @@
 <script>
-  import fakeImg from "$lib/assets/luka-modric-avatar.jpg";
+  import defaultAvatar from "$lib/assets/default-avatar.webp";
+
   import Icon from "@iconify/svelte";
   import { Avatar } from "flowbite-svelte";
   import ChatFeed from "./ChatFeed.svelte";
-
-  const fakeFriend = {
-    name: "Bruno Mark",
-    image: fakeImg,
-    lastMsg: "Nice to see ya!",
-    online: true,
-    lastTimeMsg: 1721560240,
-  };
+  import { friendSelected } from "$lib/utils/dataStore";
 
   const listOptions = [
     { title: "Save", icon: "material-symbols:bookmark-outline" },
@@ -23,11 +17,14 @@
 <div class="col-span-6 flex flex-col border-r h-full">
   <div class="flex justify-between items-center border-b px-4 min-h-[70px]">
     <div class="flex items-center gap-2">
-      <Avatar src={fakeFriend.image} class="h-12 w-12 rounded-full" />
+      <Avatar
+        src={$friendSelected && defaultAvatar}
+        class="h-12 w-12 rounded-full"
+      />
       <div class="flex flex-col">
-        <h4 class="font-medium">{fakeFriend.name}</h4>
+        <h4 class="font-medium">{$friendSelected?.username ?? ""}</h4>
         <p class="text-sm text-gray-400">
-          {fakeFriend.online ? "Active now" : "Offline"}
+          {$friendSelected?.online ? "Active now" : "Offline"}
         </p>
       </div>
     </div>

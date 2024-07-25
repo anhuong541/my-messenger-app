@@ -1,10 +1,11 @@
 <script>
+  import "$lib/styles/app.css";
+
   import { browser } from "$app/environment";
   import { goto } from "$app/navigation";
 
   import Toast from "$lib/components/Toast.svelte";
   import Provider from "$lib/providers/Provider.svelte";
-  import "$lib/styles/app.css";
   import { user } from "$lib/utils/firebase";
 
   $: {

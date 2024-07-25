@@ -18,16 +18,8 @@
     </ul>
   </nav>
   <div class="flex items-center justify-end gap-4">
-    <div
-      class="flex items-center bg-primaryColor-500 text-white h-12 rounded-full overflow-hidden"
-    >
-      <p class="m-auto pl-4 pr-2">
-        {$userInfo?.username ?? "Loading User..."}
-        <!-- xem collection để đọc username -->
-      </p>
-      <UserAvatarDropdown>
-        <Avatar src={profile} class="h-12 w-12 m-auto cursor-pointer" />
-      </UserAvatarDropdown>
-    </div>
+    <UserAvatarDropdown>
+      <Avatar src={profile} class="h-12 w-12 m-auto cursor-pointer" />
+    </UserAvatarDropdown>
   </div>
 </header>

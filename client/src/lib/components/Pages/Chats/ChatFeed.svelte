@@ -61,56 +61,62 @@
       class="flex-grow flex-col-reverse h-[78vh] flex gap-2 overflow-y-auto px-4 py-2"
     >
       {#if $selectedChatroomId !== "" && $fetchMessageFromChatRoom}
-        {#each handlerFilterMessages(messages) ?? [] as item, index}
-          {#if $userInfo.uid !== item?.userId}
-            <div class="flex justify-start items-end gap-4 sm:pr-20 pr-16">
-              {#if index === messageEventsSize + 1 || item?.userId !== messages[index - 1]?.userId}
-                <img
-                  src={item?.avatar ?? defaultAvatar}
-                  alt=""
-                  class="w-12 h-12 rounded-full"
-                />
-              {:else}
-                <div class="w-12 h-12 flex-shrink-0" />
-              {/if}
-              <div
-                class="flex flex-col gap-2 bg-primaryColor-200 rounded-xl px-4 py-2"
-              >
-                <p>{item.name}</p>
-                <p>{item?.message}</p>
-                <div class="flex justify-between text-xs">
-                  <!-- <Emojis emojis={message.emojis} /> -->
-                  <p class="text-gray-600">
-                    {dayjs(item?.createAt).format("HH:mm")}
-                  </p>
+        {#if messages.length === 0}
+          <div class="h-full">
+            <p class="font-medium">Message something...</p>
+          </div>
+        {:else}
+          {#each handlerFilterMessages(messages) ?? [] as item, index}
+            {#if $userInfo.uid !== item?.userId}
+              <div class="flex justify-start items-end gap-4 sm:pr-20 pr-16">
+                {#if index === messageEventsSize + 1 || item?.userId !== messages[index - 1]?.userId}
+                  <img
+                    src={item?.avatar ?? defaultAvatar}
+                    alt=""
+                    class="w-12 h-12 rounded-full"
+                  />
+                {:else}
+                  <div class="w-12 h-12 flex-shrink-0" />
+                {/if}
+                <div
+                  class="flex flex-col gap-2 bg-primaryColor-200 rounded-xl px-4 py-2"
+                >
+                  <p>{item.name}</p>
+                  <p>{item?.message}</p>
+                  <div class="flex justify-between text-xs">
+                    <!-- <Emojis emojis={message.emojis} /> -->
+                    <p class="text-gray-600">
+                      {dayjs(item?.createAt).format("HH:mm")}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          {:else}
-            <div class="flex justify-end items-end gap-4 sm:pl-20 pl-16">
-              <div
-                class="flex flex-col gap-2 bg-primaryColor-600 text-white rounded-xl px-4 py-2"
-              >
-                <p>{item.name}</p>
-                <p>{item?.message}</p>
-                <div class="flex justify-between text-xs">
-                  <p class="text-gray-100">
-                    {dayjs(item?.createAt).format("HH:mm")}
-                  </p>
+            {:else}
+              <div class="flex justify-end items-end gap-4 sm:pl-20 pl-16">
+                <div
+                  class="flex flex-col gap-2 bg-primaryColor-600 text-white rounded-xl px-4 py-2"
+                >
+                  <p>{item.name}</p>
+                  <p>{item?.message}</p>
+                  <div class="flex justify-between text-xs">
+                    <p class="text-gray-100">
+                      {dayjs(item?.createAt).format("HH:mm")}
+                    </p>
+                  </div>
                 </div>
+                {#if index === messageEventsSize + 1 || item?.userId !== messages[index - 1]?.userId}
+                  <img
+                    src={item?.avatar ?? defaultAvatar}
+                    alt=""
+                    class="w-12 h-12 rounded-full"
+                  />
+                {:else}
+                  <div class="w-12 h-12 flex-shrink-0" />
+                {/if}
               </div>
-              {#if index === messageEventsSize + 1 || item?.userId !== messages[index - 1]?.userId}
-                <img
-                  src={item?.avatar ?? defaultAvatar}
-                  alt=""
-                  class="w-12 h-12 rounded-full"
-                />
-              {:else}
-                <div class="w-12 h-12 flex-shrink-0" />
-              {/if}
-            </div>
-          {/if}
-        {/each}
+            {/if}
+          {/each}
+        {/if}
       {:else}
         no chat ....
       {/if}

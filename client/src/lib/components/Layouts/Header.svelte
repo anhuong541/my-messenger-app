@@ -1,9 +1,9 @@
 <script>
-  import { signOut } from "$lib/utils/databaseAction";
-  import { Avatar } from "flowbite-svelte";
-
   import profile from "$lib/assets/default-avatar.webp";
+
+  import { Avatar } from "flowbite-svelte";
   import Icon from "@iconify/svelte";
+
   import { userInfo } from "$lib/utils/dataStore";
   import UserAvatarDropdown from "../Dropdown/UserAvatarDropdown.svelte";
 </script>

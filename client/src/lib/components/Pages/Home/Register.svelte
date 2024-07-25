@@ -1,8 +1,9 @@
 <script>
-  import Icon from "@iconify/svelte";
-
   import heroImg from "$lib/assets/hero-img-chat-app.jpg";
   import Button from "../../Widget/Button.svelte";
+
+  import Icon from "@iconify/svelte";
+
   import { isLoading, loginState } from "$lib/utils/store";
   import {
     onSubmitUserAction,

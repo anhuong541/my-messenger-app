@@ -1,9 +1,10 @@
 <script lang="ts">
   import { Input, Modal } from "flowbite-svelte";
-  import Button from "../Widget/Button.svelte";
-  import Icon from "@iconify/svelte";
-  import { firestore, user } from "$lib/utils/firebase";
   import { collection, doc, setDoc } from "firebase/firestore";
+  import Icon from "@iconify/svelte";
+
+  import Button from "../Widget/Button.svelte";
+  import { firestore, user } from "$lib/utils/firebase";
 
   export let openModal = true;
   export let usersData;

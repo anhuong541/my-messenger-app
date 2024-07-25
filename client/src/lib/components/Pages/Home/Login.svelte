@@ -3,9 +3,9 @@
 
   import Icon from "@iconify/svelte";
   import Button from "../../Widget/Button.svelte";
+
   import { isLoading, loginState } from "$lib/utils/store";
-  import { user } from "$lib/utils/firebase";
-  import { onSubmitUserAction, signOut } from "$lib/utils/databaseAction";
+  import { onSubmitUserAction } from "$lib/utils/databaseAction";
 
   let email = "";
   let password = "";

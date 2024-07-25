@@ -1,15 +1,16 @@
 <script lang="ts">
   import defaultAvatar from "$lib/assets/default-avatar.webp";
 
-  import Button from "$lib/components/Widget/Button.svelte";
+  import dayjs from "dayjs";
   import Icon from "@iconify/svelte";
   import { Input } from "flowbite-svelte";
-  import dayjs from "dayjs";
   import { doc, setDoc } from "firebase/firestore";
+  import { collectionStore } from "sveltefire";
+
   import { firestore } from "$lib/utils/firebase";
   import { selectedChatroomId } from "$lib/utils/store";
   import { userInfo } from "$lib/utils/dataStore";
-  import { collectionStore } from "sveltefire";
+  import Button from "$lib/components/Widget/Button.svelte";
 
   let message = "";
   let fetchMessageFromChatRoom;

@@ -2,9 +2,10 @@
   import defaultImg from "$lib/assets/default-avatar.webp";
 
   import { Avatar, Modal } from "flowbite-svelte";
+  import { collection, deleteDoc, doc, setDoc } from "firebase/firestore";
+
   import Button from "../Widget/Button.svelte";
   import { firestore, user } from "$lib/utils/firebase";
-  import { collection, deleteDoc, doc, setDoc } from "firebase/firestore";
   import { generateChatRoomId } from "$lib/utils";
 
   export let openModal = true;

@@ -1,10 +1,11 @@
 <script>
-  import { friendSelected } from "$lib/utils/dataStore";
-  import { firestore, user } from "$lib/utils/firebase";
-  import { selectedChatroomId } from "$lib/utils/store";
   import Icon from "@iconify/svelte";
   import { collection, deleteDoc, doc } from "firebase/firestore";
   import { Dropdown, DropdownItem } from "flowbite-svelte";
+
+  import { friendSelected } from "$lib/utils/dataStore";
+  import { firestore, user } from "$lib/utils/firebase";
+  import { selectedChatroomId } from "$lib/utils/store";
 
   export let showDropdown = false;
   export let friend;

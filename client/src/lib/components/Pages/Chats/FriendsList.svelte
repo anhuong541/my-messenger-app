@@ -4,10 +4,11 @@
   import dayjs from "dayjs";
   import Icon from "@iconify/svelte";
   import { Avatar, Input } from "flowbite-svelte";
-  import AddFriendModal from "../../Modals/AddFriendModal.svelte";
-  import { firestore, user } from "$lib/utils/firebase";
   import { collectionStore } from "sveltefire";
   import { onMount } from "svelte";
+
+  import AddFriendModal from "../../Modals/AddFriendModal.svelte";
+  import { firestore, user } from "$lib/utils/firebase";
   import { friendSelected, userInfo, usersList } from "$lib/utils/dataStore";
   import { selectedChatroomId } from "$lib/utils/store";
   import FriendRequestModal from "$lib/components/Modals/FriendRequestModal.svelte";

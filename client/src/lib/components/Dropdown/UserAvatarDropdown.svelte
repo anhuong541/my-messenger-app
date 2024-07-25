@@ -1,7 +1,8 @@
 <script>
-  import { signOut } from "$lib/utils/databaseAction";
   import Icon from "@iconify/svelte";
   import { Dropdown, DropdownItem } from "flowbite-svelte";
+
+  import { signOut } from "$lib/utils/databaseAction";
 
   const dropdownOption = [
     {

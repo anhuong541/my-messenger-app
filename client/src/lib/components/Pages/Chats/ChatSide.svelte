@@ -4,6 +4,7 @@
   import Icon from "@iconify/svelte";
   import { Avatar } from "flowbite-svelte";
   import ChatFeed from "./ChatFeed.svelte";
+
   import { friendSelected } from "$lib/utils/dataStore";
 
   const listOptions = [

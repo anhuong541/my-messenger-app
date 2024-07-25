@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { showToast, toastMsg, toastStatus } from "$lib/utils/store";
   import { slide } from "svelte/transition";
   import {
     BanOutline,
@@ -9,6 +8,8 @@
   } from "flowbite-svelte-icons";
   import type { ColorVariant } from "flowbite-svelte";
   import { Toast } from "flowbite-svelte";
+
+  import { showToast, toastMsg, toastStatus } from "$lib/utils/store";
 
   $: toastColor = (
     $toastStatus === "success"

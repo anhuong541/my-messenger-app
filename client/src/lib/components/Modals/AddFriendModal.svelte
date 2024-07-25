@@ -7,9 +7,9 @@
 
   export let openModal = true;
   export let usersData;
+  export let friendsList;
 
   let uidTyped: string = "";
-  let listFriendRequestSended = [];
 
   const sendFriendRequest = async () => {
     const userData = usersData.find((item: any) => item?.uid === $user?.uid);
@@ -30,8 +30,8 @@
   };
 
   $: userFilterd = usersData.find((item: any) => item?.uid === uidTyped);
-
   $: isUser = $user?.uid === userFilterd?.uid ?? false;
+  $: isFriends = friendsList.map((item: any) => item?.uid).includes(uidTyped);
 </script>
 
 <Modal title="New Contact" bind:open={openModal}>
@@ -66,9 +66,9 @@
       <Button
         className="!w-[140px]"
         on:click={sendFriendRequest}
-        disabled={isUser}
+        disabled={isUser || isFriends}
       >
-        {isUser ? "It's you" : "Add Friend"}
+        {isUser ? "It's you" : isFriends ? "Your Friend" : "Add Friend"}
       </Button>
     {/if}
   </div>

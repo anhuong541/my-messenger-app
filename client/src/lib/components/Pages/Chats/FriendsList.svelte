@@ -254,6 +254,7 @@
 <AddFriendModal
   bind:openModal={openAddFriendModal}
   usersData={$collectionUser ?? []}
+  {friendsList}
 />
 
 <style>

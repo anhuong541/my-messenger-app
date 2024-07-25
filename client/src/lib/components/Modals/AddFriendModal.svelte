@@ -10,6 +10,8 @@
   export let friendsList;
 
   let uidTyped: string = "";
+  let memoryUid: string = "";
+  let friendsRequestSended: boolean = false;
 
   const sendFriendRequest = async () => {
     const userData = usersData.find((item: any) => item?.uid === $user?.uid);
@@ -27,7 +29,16 @@
       username: userData?.username,
       gender: userData?.gender,
     });
+
+    friendsRequestSended = true;
+    memoryUid = uidTyped;
   };
+
+  $: {
+    if (uidTyped !== memoryUid && friendsRequestSended) {
+      friendsRequestSended = false;
+    }
+  }
 
   $: userFilterd = usersData.find((item: any) => item?.uid === uidTyped);
   $: isUser = $user?.uid === userFilterd?.uid ?? false;
@@ -64,11 +75,16 @@
   <div class="flex justify-end items-center gap-4">
     {#if userFilterd}
       <Button
-        className="!w-[140px]"
         on:click={sendFriendRequest}
-        disabled={isUser || isFriends}
+        disabled={isUser || isFriends || friendsRequestSended}
       >
-        {isUser ? "It's you" : isFriends ? "Your Friend" : "Add Friend"}
+        {isUser
+          ? "It's you"
+          : isFriends
+            ? "Your Friend"
+            : friendsRequestSended
+              ? "Friend Request Sended"
+              : "Add Friend"}
       </Button>
     {/if}
   </div>

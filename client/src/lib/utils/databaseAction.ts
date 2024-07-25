@@ -34,6 +34,7 @@ export const onSubmitUserAction = async (email: string, password: string) => {
           "Something went wrong during login. Please check your password and try again",
           "error"
         );
+        isLoading.set(false);
       });
 
       await updateUserOnlineState(userResponse?.user?.uid ?? "", true);
@@ -49,6 +50,7 @@ export const onSubmitUserAction = async (email: string, password: string) => {
           "Something went wrong during register. Please check your email and try again",
           "error"
         );
+        isLoading.set(false);
       });
     }
     if (!onError) {

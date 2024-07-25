@@ -10,7 +10,7 @@ type UserInfoType = {
   email: string;
 };
 
-const initialUserInfo = {
+export const initialUserInfo = {
   id: "",
   uid: "",
   username: "",

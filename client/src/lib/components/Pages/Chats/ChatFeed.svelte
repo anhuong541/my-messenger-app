@@ -75,11 +75,13 @@
               <div
                 class="flex flex-col gap-2 bg-primaryColor-200 rounded-xl px-4 py-2"
               >
-                <h5 class="font-medium">{item?.name}</h5>
+                <p>{item.name}</p>
                 <p>{item?.message}</p>
                 <div class="flex justify-between text-xs">
                   <!-- <Emojis emojis={message.emojis} /> -->
-                  <p>{dayjs(item?.createAt).format("HH:mm")}</p>
+                  <p class="text-gray-600">
+                    {dayjs(item?.createAt).format("HH:mm")}
+                  </p>
                 </div>
               </div>
             </div>
@@ -88,10 +90,12 @@
               <div
                 class="flex flex-col gap-2 bg-primaryColor-600 text-white rounded-xl px-4 py-2"
               >
-                <h5 class="font-medium">{item?.name}</h5>
+                <p>{item.name}</p>
                 <p>{item?.message}</p>
                 <div class="flex justify-between text-xs">
-                  <p>{dayjs(item?.createAt).format("HH:mm")}</p>
+                  <p class="text-gray-100">
+                    {dayjs(item?.createAt).format("HH:mm")}
+                  </p>
                 </div>
               </div>
               {#if index === messageEventsSize + 1 || item?.userId !== messages[index - 1]?.userId}

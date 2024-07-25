@@ -83,7 +83,7 @@
     }
   }
 
-  $: console.log("chatRoomId: ", $selectedChatroomId);
+  // $: console.log("chatRoomId: ", $selectedChatroomId);
 </script>
 
 <div class="col-span-3 flex flex-col border-r h-full">
@@ -91,7 +91,7 @@
     <h3 class="font-semibold text-lg">Messages</h3>
     <div class="flex justify-end items-center gap-2">
       <button
-        class="rounded-full w-10 h-10 bg-gray-100 relative"
+        class="rounded-full w-10 h-10 bg-primaryColor-100 relative"
         on:click={() => (openFriendRequestModal = !openFriendRequestModal)}
       >
         <Icon
@@ -105,7 +105,7 @@
         {/if}
       </button>
       <button
-        class="rounded-full w-10 h-10 bg-gray-100"
+        class="rounded-full w-10 h-10 bg-primaryColor-100"
         on:click={() => (openAddFriendModal = !openAddFriendModal)}
       >
         <Icon
@@ -153,10 +153,10 @@
           <!-- svelte-ignore a11y-no-static-element-interactions -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
-            class={`relative w-full hover:bg-gray-200 rounded-md cursor-pointer ${$selectedChatroomId === friend.chatRoomId ? "bg-gray-200" : ""}`}
+            class={`relative w-full hover:bg-primaryColor-200 rounded-md cursor-pointer ${$selectedChatroomId === friend.chatRoomId ? "bg-primaryColor-200" : ""}`}
           >
             <div
-              class="flex items-center gap-2 w-full px-2 py-3 active:bg-gray-100"
+              class="flex items-center gap-2 w-full px-2 py-3 active:bg-primaryColor-100"
               on:click={() => {
                 selectedChatroomId.set(friend.chatRoomId);
                 friendSelected.set(friend);
@@ -167,7 +167,7 @@
               <div class="flex flex-col justify-center w-full overflow-hidden">
                 <h4>{friend.username}</h4>
                 <p
-                  class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
+                  class="text-sm text-primaryColor-600 overflow-hidden text-ellipsis whitespace-nowrap"
                 >
                   {friend.email}
                 </p>
@@ -178,7 +178,7 @@
                     {friend?.online ? "Online" : "Offline"}
                   </p>
                   •
-                  <p class="text-gray-500 text-xs">
+                  <p class="text-primaryColor-500 text-xs">
                     {dayjs(friend.lastTimeMsg).format("DD-MM")}
                   </p>
                 </div>
@@ -193,20 +193,20 @@
       {:else}
         {#each [{}] as request}
           <div
-            class={`flex items-center gap-2 w-full px-2 py-3 hover:bg-gray-200 active:bg-gray-100 rounded-md cursor-pointer`}
+            class={`flex items-center gap-2 w-full px-2 py-3 hover:bg-primaryColor-200 active:bg-primaryColor-100 rounded-md cursor-pointer`}
           >
-            <!-- ${$selectedChatroomId === request?.chatRoomId ? "bg-gray-200" : ""} -->
+            <!-- ${$selectedChatroomId === request?.chatRoomId ? "bg-primaryColor-200" : ""} -->
             <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />
             <div class="flex flex-col justify-center w-full overflow-hidden">
               <h4>{request?.username ?? "Room Name!!!"}</h4>
               <p
-                class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
+                class="text-sm text-primaryColor-600 overflow-hidden text-ellipsis whitespace-nowrap"
               >
                 <!-- {request.email} --> last messages...
               </p>
               <div class="flex justify-between w-full gap-1 text-sm">
-                <p class="text-green-500">21 People</p>
-                <p class="text-gray-500 text-xs">
+                <p class="text-gray-500">21 People</p>
+                <p class="text-primaryColor-500 text-xs">
                   <!-- {dayjs(request.lastTimeMsg).format("DD-MM")} -->
                   21 - 3
                 </p>

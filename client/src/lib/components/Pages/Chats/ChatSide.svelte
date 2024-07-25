@@ -23,7 +23,7 @@
       />
       <div class="flex flex-col">
         <h4 class="font-medium">{$friendSelected?.username ?? ""}</h4>
-        <p class="text-sm text-gray-400">
+        <p class="text-sm text-primaryColor-400">
           {$friendSelected?.online ? "Active now" : "Offline"}
         </p>
       </div>
@@ -31,7 +31,7 @@
 
     <div class="flex items-center justify-end gap-2">
       {#each listOptions as { title, icon }}
-        <button class="rounded-full w-10 h-10 bg-gray-100">
+        <button class="rounded-full w-10 h-10 bg-primaryColor-100">
           <Icon {icon} class="h-6 w-6 m-auto" />
         </button>
       {/each}

@@ -43,8 +43,6 @@
     showDropdown = false;
   };
 
-  $: console.log({ friend });
-
   const dropdownOption = [
     {
       label: "Unfriend",

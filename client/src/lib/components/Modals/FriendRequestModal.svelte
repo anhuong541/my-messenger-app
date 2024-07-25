@@ -60,13 +60,13 @@
   {#if friendsRequestList.length > 0}
     {#each friendsRequestList ?? [] as request}
       <div
-        class="flex items-center gap-2 w-full px-2 py-3 hover:bg-gray-200 active:bg-gray-100 rounded-md cursor-pointer"
+        class="flex items-center gap-2 w-full px-2 py-3 hover:bg-primaryColor-200 active:bg-primaryColor-100 rounded-md cursor-pointer"
       >
         <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />
         <div class="flex flex-col justify-center w-full overflow-hidden">
           <h4>{request.username}</h4>
           <p
-            class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
+            class="text-sm text-primaryColor-600 overflow-hidden text-ellipsis whitespace-nowrap"
           >
             {request.email}
           </p>

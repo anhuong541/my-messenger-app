@@ -11,6 +11,7 @@
   import { friendSelected, userInfo, usersList } from "$lib/utils/dataStore";
   import { selectedChatroomId } from "$lib/utils/store";
   import FriendRequestModal from "$lib/components/Modals/FriendRequestModal.svelte";
+  import FriendDropdownOption from "$lib/components/Dropdown/FriendDropdownOption.svelte";
 
   let chooseTypeFriendList: "personal" | "groups" = "personal";
   let openAddFriendModal: boolean = false;
@@ -22,6 +23,7 @@
   let friendsList: any = [];
   let isFetchedFriendsListData = false;
   let collectionUser;
+  let friendDropdownIndex: number | null = null;
 
   $: friendsRequestList =
     ($fetchFriendsRequestList && $fetchFriendsRequestList) ?? [];
@@ -141,37 +143,50 @@
         class="border py-3 px-6 pl-12 rounded-full w-full"
       />
     </label>
-    <div class="flex flex-col gap-2 px-2">
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div
+      class="flex flex-col gap-2 px-2"
+      on:mouseleave={() => (friendDropdownIndex = null)}
+    >
       {#if chooseTypeFriendList === "personal"}
-        {#each friendsList ?? [] as friend}
+        {#each friendsList ?? [] as friend, index}
           <!-- svelte-ignore a11y-no-static-element-interactions -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
-            class={`flex items-center gap-2 w-full px-2 py-3 hover:bg-gray-200 active:bg-gray-100 rounded-md cursor-pointer ${$selectedChatroomId === friend.chatRoomId ? "bg-gray-200" : ""}`}
-            on:click={() => {
-              selectedChatroomId.set(friend.chatRoomId);
-              friendSelected.set(friend);
-            }}
+            class={`relative w-full hover:bg-gray-200 rounded-md cursor-pointer ${$selectedChatroomId === friend.chatRoomId ? "bg-gray-200" : ""}`}
           >
-            <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />
-            <div class="flex flex-col justify-center w-full overflow-hidden">
-              <h4>{friend.username}</h4>
-              <p
-                class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
-              >
-                {friend.email}
-              </p>
-              <div class="flex justify-between w-full gap-1 text-sm">
+            <div
+              class="flex items-center gap-2 w-full px-2 py-3 active:bg-gray-100"
+              on:click={() => {
+                selectedChatroomId.set(friend.chatRoomId);
+                friendSelected.set(friend);
+              }}
+              on:mouseenter={() => (friendDropdownIndex = index)}
+            >
+              <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />
+              <div class="flex flex-col justify-center w-full overflow-hidden">
+                <h4>{friend.username}</h4>
                 <p
-                  class={`${friend?.online ? "text-green-500" : "text-red-500"}`}
+                  class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
                 >
-                  {friend?.online ? "Online" : "Offline"}
+                  {friend.email}
                 </p>
-                <p class="text-gray-500 text-xs">
-                  {dayjs(friend.lastTimeMsg).format("DD-MM")}
-                </p>
+                <div class="flex items-center w-full gap-1 text-sm">
+                  <p
+                    class={`${friend?.online ? "text-green-500" : "text-red-500"}`}
+                  >
+                    {friend?.online ? "Online" : "Offline"}
+                  </p>
+                  •
+                  <p class="text-gray-500 text-xs">
+                    {dayjs(friend.lastTimeMsg).format("DD-MM")}
+                  </p>
+                </div>
               </div>
             </div>
+            <FriendDropdownOption
+              showDropdown={friendDropdownIndex === index && true}
+            />
           </div>
         {/each}
       {:else}

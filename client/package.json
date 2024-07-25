@@ -26,6 +26,7 @@
 	"type": "module",
 	"dependencies": {
 		"@iconify/svelte": "^4.0.2",
+		"@sveltejs/adapter-vercel": "^5.4.1",
 		"@svelteuidev/composables": "^0.15.7",
 		"@svelteuidev/core": "^0.15.7",
 		"@svelteuidev/dates": "^0.15.7",

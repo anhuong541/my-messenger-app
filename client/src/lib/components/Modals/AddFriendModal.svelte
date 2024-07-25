@@ -12,7 +12,7 @@
 
   let uidTyped: string = "";
   let memoryUid: string = "";
-  let friendsRequestSended: boolean = false;
+  let friendsRequestSented: boolean = false;
 
   const sendFriendRequest = async () => {
     const userData = usersData.find((item: any) => item?.uid === $user?.uid);
@@ -31,13 +31,13 @@
       gender: userData?.gender,
     });
 
-    friendsRequestSended = true;
+    friendsRequestSented = true;
     memoryUid = uidTyped;
   };
 
   $: {
-    if (uidTyped !== memoryUid && friendsRequestSended) {
-      friendsRequestSended = false;
+    if (uidTyped !== memoryUid && friendsRequestSented) {
+      friendsRequestSented = false;
     }
   }
 
@@ -77,14 +77,14 @@
     {#if userFilterd}
       <Button
         on:click={sendFriendRequest}
-        disabled={isUser || isFriends || friendsRequestSended}
+        disabled={isUser || isFriends || friendsRequestSented}
       >
         {isUser
           ? "It's you"
           : isFriends
             ? "Your Friend"
-            : friendsRequestSended
-              ? "Friend Request Sended"
+            : friendsRequestSented
+              ? "Friend Request Sented"
               : "Add Friend"}
       </Button>
     {/if}

@@ -3,12 +3,17 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth, firestore, user } from "./firebase";
-import { isLoading, loginState } from "./store";
+import { isLoading, loginState, selectedChatroomId } from "./store";
 import type { LoginStateType } from "$lib/types/stores-type";
 import { triggerToast } from ".";
 import { goto } from "$app/navigation";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
-import { usersList } from "./dataStore";
+import {
+  friendSelected,
+  initialUserInfo,
+  userInfo,
+  usersList,
+} from "./dataStore";
 
 export const onSubmitUserAction = async (email: string, password: string) => {
   if (email !== "" && password !== "") {
@@ -72,6 +77,9 @@ export const updateUserOnlineState = async (uid: string, state: boolean) => {
 
 export const clearUserData = () => {
   usersList.set([]);
+  friendSelected.set({});
+  selectedChatroomId.set("");
+  userInfo.set(initialUserInfo);
 };
 
 export const signOut = async () => {

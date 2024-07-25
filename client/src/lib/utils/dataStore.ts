@@ -20,6 +20,8 @@ const initialUserInfo = {
   email: "",
 };
 
+export const friendSelected = writable<any>();
+
+// user
 export const usersList = writable([]);
 export const userInfo = writable<UserInfoType>(initialUserInfo);
-export const friendSelected = writable<any>();

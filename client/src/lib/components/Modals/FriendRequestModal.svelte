@@ -57,36 +57,40 @@
 </script>
 
 <Modal title="Friend Requests" bind:open={openModal}>
-  {#each friendsRequestList ?? [] as request}
-    <div
-      class="flex items-center gap-2 w-full px-2 py-3 hover:bg-gray-200 active:bg-gray-100 rounded-md cursor-pointer"
-    >
-      <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />
-      <div class="flex flex-col justify-center w-full overflow-hidden">
-        <h4>{request.username}</h4>
-        <p
-          class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
-        >
-          {request.email}
-        </p>
-        <div class="flex items-center w-full gap-1 text-sm">
-          <p class="text-green-500">
-            {request.gender}
+  {#if friendsRequestList.length > 0}
+    {#each friendsRequestList ?? [] as request}
+      <div
+        class="flex items-center gap-2 w-full px-2 py-3 hover:bg-gray-200 active:bg-gray-100 rounded-md cursor-pointer"
+      >
+        <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />
+        <div class="flex flex-col justify-center w-full overflow-hidden">
+          <h4>{request.username}</h4>
+          <p
+            class="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap"
+          >
+            {request.email}
           </p>
+          <div class="flex items-center w-full gap-1 text-sm">
+            <p class="text-green-500">
+              {request.gender}
+            </p>
+          </div>
         </div>
+        <Button
+          className="!w-[100px]"
+          on:click={async () => onAcceptFriendRequest(request.uid)}
+        >
+          Accept
+        </Button>
+        <Button
+          className="!w-[100px]"
+          on:click={async () => onDeleteFriendRequest(request.uid)}
+        >
+          Delete
+        </Button>
       </div>
-      <Button
-        className="!w-[100px]"
-        on:click={async () => onAcceptFriendRequest(request.uid)}
-      >
-        Accept
-      </Button>
-      <Button
-        className="!w-[100px]"
-        on:click={async () => onDeleteFriendRequest(request.uid)}
-      >
-        Delete
-      </Button>
-    </div>
-  {/each}
+    {/each}
+  {:else}
+    <p class="text-primaryColor-500">No friend request</p>
+  {/if}
 </Modal>

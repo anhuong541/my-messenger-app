@@ -33,7 +33,7 @@
   $: messageEventsSize = messages?.length ?? 0;
 
   const onUserSendMessage = async () => {
-    if ($selectedChatroomId && $userInfo) {
+    if ($selectedChatroomId && $userInfo && message !== "") {
       await setDoc(
         doc(
           firestore,
@@ -113,7 +113,10 @@
   </div>
 
   <!-- send message -->
-  <div class="flex items-center gap-2 px-2">
+  <form
+    on:submit|preventDefault={onUserSendMessage}
+    class="flex items-center gap-2 px-2"
+  >
     <Input
       type="text"
       placeholder="Aa"
@@ -122,13 +125,13 @@
     />
     <Button
       className="!w-[140px]"
-      on:click={onUserSendMessage}
+      type="submit"
       disabled={$selectedChatroomId ? false : true}
     >
       Send
       <Icon icon="material-symbols:send-outline-rounded" class="h-6 w-6 " />
     </Button>
-  </div>
+  </form>
 </div>
 
 <style></style>

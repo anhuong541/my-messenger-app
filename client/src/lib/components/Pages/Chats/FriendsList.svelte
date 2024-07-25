@@ -186,6 +186,7 @@
             </div>
             <FriendDropdownOption
               showDropdown={friendDropdownIndex === index && true}
+              {friend}
             />
           </div>
         {/each}

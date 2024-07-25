@@ -36,3 +36,26 @@ export function handleFileChange(event: any) {
 export function generateChatRoomId() {
   return uuidv6();
 }
+
+export function onCopyText(text: string) {
+  if (!navigator.clipboard) {
+    console.error("Clipboard API not supported");
+    return;
+  }
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      console.log("Text copied to clipboard");
+    })
+    .catch((err) => {
+      console.error("Failed to copy text: ", err);
+    });
+}
+
+export function shortText(text: string, characterNum: number) {
+  return text.length < characterNum - 1
+    ? text
+    : text.slice(0, characterNum) +
+        "..." +
+        text.slice(text.length - characterNum, text.length);
+}

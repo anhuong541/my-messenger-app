@@ -6,12 +6,43 @@
   import ChatFeed from "./ChatFeed.svelte";
 
   import { friendSelected } from "$lib/utils/dataStore";
+  import { collection, deleteDoc, doc } from "firebase/firestore";
+  import { firestore, user } from "$lib/utils/firebase";
+  import { selectedChatroomId } from "$lib/utils/store";
+
+  const onRemoveFriend = async () => {
+    if ($user) {
+      const friendRef = collection(firestore, "users", $user?.uid, "friends");
+      const userAtFriendListRef = collection(
+        firestore,
+        "users",
+        $friendSelected.uid,
+        "friends"
+      );
+      const chatRoomCol = collection(firestore, "chat_rooms");
+
+      await deleteDoc(doc(friendRef, $friendSelected.uid));
+      await deleteDoc(doc(userAtFriendListRef, $user?.uid));
+      selectedChatroomId.set("");
+      friendSelected.set({});
+      await deleteDoc(doc(chatRoomCol, $friendSelected?.chatRoomId));
+    }
+  };
+
+  const onDeleteMessage = async () => {
+    if ($user) {
+      const chatRoomCol = collection(firestore, "chat_rooms");
+      selectedChatroomId.set("");
+      await deleteDoc(doc(chatRoomCol, $friendSelected?.chatRoomId));
+    }
+  };
 
   const listOptions = [
-    { title: "Save", icon: "material-symbols:bookmark-outline" },
-    { title: "Call", icon: "material-symbols:call-outline" },
-    { title: "Report", icon: "material-symbols:report-outline-rounded" },
-    { title: "More", icon: "material-symbols:more-horiz" },
+    // { label: "Save", icon: "material-symbols:bookmark-outline" },
+    { label: "Call", icon: "material-symbols:call-outline" },
+    // { label: "Report", icon: "material-symbols:report-outline-rounded" },
+    { label: "Video Call", icon: "material-symbols:videocam-outline-rounded" },
+    { label: "More", icon: "material-symbols:more-horiz" },
   ];
 </script>
 
@@ -31,7 +62,7 @@
     </div>
 
     <div class="flex items-center justify-end gap-2">
-      {#each listOptions as { title, icon }}
+      {#each listOptions as { label, icon }}
         <button class="rounded-full w-10 h-10 bg-primaryColor-100">
           <Icon {icon} class="h-6 w-6 m-auto" />
         </button>

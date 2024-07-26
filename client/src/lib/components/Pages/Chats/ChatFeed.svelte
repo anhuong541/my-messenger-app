@@ -8,7 +8,7 @@
   import { collectionStore } from "sveltefire";
 
   import { firestore } from "$lib/utils/firebase";
-  import { selectedChatroomId } from "$lib/utils/store";
+  import { onTypeMessageChat, selectedChatroomId } from "$lib/utils/store";
   import { userInfo } from "$lib/utils/dataStore";
   import Button from "$lib/components/Widget/Button.svelte";
 
@@ -17,10 +17,17 @@
 
   $: {
     if ($selectedChatroomId) {
-      fetchMessageFromChatRoom = collectionStore(
-        firestore,
-        `chat_rooms/${$selectedChatroomId}/messages`
-      );
+      if ($onTypeMessageChat === "personal") {
+        fetchMessageFromChatRoom = collectionStore(
+          firestore,
+          `chat_rooms/${$selectedChatroomId}/messages`
+        );
+      } else if ($onTypeMessageChat === "groups") {
+        fetchMessageFromChatRoom = collectionStore(
+          firestore,
+          `chat_groups/${$selectedChatroomId}/messages`
+        );
+      }
     }
   }
 
@@ -38,7 +45,7 @@
       await setDoc(
         doc(
           firestore,
-          `chat_rooms/${$selectedChatroomId}/messages/${messageEventsSize}`
+          `${$onTypeMessageChat === "personal" ? "chat_rooms" : "chat_groups"}/${$selectedChatroomId}/messages/${messageEventsSize}`
         ),
         {
           userId: $userInfo.uid,

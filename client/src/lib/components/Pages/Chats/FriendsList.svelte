@@ -18,8 +18,7 @@
     AddFriendModal,
   } from "$lib/components/Modals";
 
-  let chooseTypeFriendList: "personal" | "groups" =
-    ($onTypeMessageChat && $onTypeMessageChat) ?? "personal";
+  let chooseTypeFriendList: "personal" | "groups" = $onTypeMessageChat;
   let openAddFriendModal: boolean = false;
   let openFriendRequestModal: boolean = false;
   let openAddGroupModal: boolean = false;
@@ -141,13 +140,19 @@
   <div class="flex justify-between font-medium border-b">
     <button
       class={`flex items-center justify-center w-full py-3 transition-all duration-300 animate-shock ${chooseTypeFriendList === "personal" ? "border-b-2 border-black" : ""}`}
-      on:click={() => (chooseTypeFriendList = "personal")}
+      on:click={() => {
+        chooseTypeFriendList = "personal";
+        onTypeMessageChat.set("personal");
+      }}
     >
       Personal
     </button>
     <button
       class={`flex items-center justify-center w-full py-3 transition-all duration-300 animate-shock ${chooseTypeFriendList === "groups" ? "border-b-2 border-black" : ""}`}
-      on:click={() => (chooseTypeFriendList = "groups")}
+      on:click={() => {
+        chooseTypeFriendList = "groups";
+        onTypeMessageChat.set("groups");
+      }}
     >
       Groups
     </button>
@@ -218,7 +223,7 @@
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
             class="flex items-center gap-2 w-full px-2 py-3 hover:bg-primaryColor-200 active:bg-primaryColor-100 rounded-md cursor-pointer"
-            on:click={() => {}}
+            on:click={() => selectedChatroomId.set(group?.chatGroupId)}
           >
             <!-- ${$selectedChatroomId === request?.chatRoomId ? "bg-primaryColor-200" : ""} -->
             <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />

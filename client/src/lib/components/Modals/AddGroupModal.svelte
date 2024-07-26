@@ -7,8 +7,7 @@
 
   import Button from "../Widget/Button.svelte";
   import { firestore, user } from "$lib/utils/firebase";
-  import dayjs from "dayjs";
-  import { generateChatRoomId } from "$lib/utils";
+  import { generateChatRoomId, triggerToast } from "$lib/utils";
   import { userInfo } from "$lib/utils/dataStore";
 
   export let openModal = false;
@@ -16,13 +15,25 @@
 
   let memberList: any[] = [];
   let searchUser = "";
+  let groupName = "";
 
   const creatGroupChat = async () => {
+    if (groupName === "") {
+      triggerToast("You should type your group name", "warning");
+      return;
+    }
+
+    if (memberList.length === 0) {
+      triggerToast("You should add more team member", "warning");
+      return;
+    }
+
     const newChatGroupId = generateChatRoomId();
     const newChatGroupRef = collection(firestore, "chat_groups");
 
     await setDoc(doc(newChatGroupRef, newChatGroupId), {
       members: [...memberList, $userInfo],
+      groupName,
       createAt: Date.now(),
       chatGroupId: newChatGroupId,
     });
@@ -54,20 +65,36 @@
 </script>
 
 <Modal title="Create New Group Chat" bind:open={openModal}>
-  <label for="search-friends" class="relative">
-    <Icon
-      icon="material-symbols:search-rounded"
-      class="absolute top-[50%] left-4 -translate-y-1/2 w-6 h-6"
-    />
-    <Input
-      type="text"
-      id="search"
-      name="search"
-      bind:value={searchUser}
-      placeholder="Type their uid"
-      class="border py-3 px-6 pl-12 rounded-xl w-full"
-    />
-  </label>
+  <div class="flex flex-col gap-4">
+    <label for="search-friends" class="relative">
+      <Icon
+        icon="material-symbols:search-rounded"
+        class="absolute top-[50%] left-4 -translate-y-1/2 w-6 h-6"
+      />
+      <Input
+        type="text"
+        id="search"
+        name="search"
+        bind:value={searchUser}
+        placeholder="Search there name"
+        class="border py-3 px-6 pl-12 rounded-xl w-full"
+      />
+    </label>
+    <label for="search-friends" class="relative">
+      <Icon
+        icon="material-symbols:groups-outline"
+        class="absolute top-[50%] left-4 -translate-y-1/2 w-6 h-6"
+      />
+      <Input
+        type="text"
+        id="search"
+        name="search"
+        bind:value={groupName}
+        placeholder="Name Group"
+        class="border py-3 px-6 pl-12 rounded-xl w-full"
+      />
+    </label>
+  </div>
   <div class="flex flex-col gap-4">
     {#if memberList.length > 0}
       <div>

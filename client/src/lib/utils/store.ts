@@ -7,4 +7,4 @@ export const showToast = writable(false);
 export const toastMsg = writable("");
 export const toastStatus = writable<ToastStatusType>("success");
 export const selectedChatroomId = writable("");
-export const onTypeMessageChat = writable<"personal" | "groups">("groups");
+export const onTypeMessageChat = writable<"personal" | "groups">("personal");

@@ -18,7 +18,8 @@
     AddFriendModal,
   } from "$lib/components/Modals";
 
-  let chooseTypeFriendList: "personal" | "groups" = $onTypeMessageChat;
+  let chooseTypeFriendList: "personal" | "groups" =
+    ($onTypeMessageChat && $onTypeMessageChat) ?? "personal";
   let openAddFriendModal: boolean = false;
   let openFriendRequestModal: boolean = false;
   let openAddGroupModal: boolean = false;
@@ -40,7 +41,7 @@
     $collectionChatGroup &&
     $user &&
     $collectionChatGroup?.filter((item: any) =>
-      item.member.map((item: any) => item.uid).includes($user.uid)
+      item?.members.map((item: any) => item.uid).includes($user.uid)
     );
 
   $: {
@@ -77,8 +78,6 @@
       isFetchedFriendsListData = true;
     }
   }
-
-  $: console.log({ groupsList });
 
   onMount(() => {
     collectionUser = collectionStore(firestore, "users");
@@ -232,11 +231,10 @@
               </p>
               <div class="flex justify-between w-full gap-1 text-sm">
                 <p class="text-gray-500">
-                  {group?.members?.length ?? 0} People
+                  {group?.members?.length ?? 0} members
                 </p>
                 <p class="text-primaryColor-500 text-xs">
-                  <!-- {dayjs(request.lastTimeMsg).format("DD-MM")} -->
-                  21 - 3
+                  {dayjs(group?.createAt).format("DD-MM")}
                 </p>
               </div>
             </div>

@@ -3,7 +3,7 @@
 
   import { Avatar, Tooltip } from "flowbite-svelte";
   import Icon from "@iconify/svelte";
-  import UserAvatarDropdown from "../Dropdown/UserAvatarDropdown.svelte";
+  import { UserAvatarDropdown } from "../Dropdown";
   import { user } from "$lib/utils/firebase";
   import { onCopyText, shortText } from "$lib/utils";
 
@@ -16,7 +16,7 @@
   <nav class="flex">
     <ul class="flex items-center gap-8 text-lg font-medium">
       <!-- <li><Icon icon="material-symbols:menu-rounded" class="w-12 h-12" /></li> -->
-      <li><h1 class="font-semibold text-2xl">Chat Application</h1></li>
+      <li><h1 class="font-semibold text-2xl">💬 Svelte Messsenger</h1></li>
       <!-- <li>Service</li> -->
     </ul>
   </nav>
@@ -26,6 +26,9 @@
       on:click={() => {
         onCopyText($user?.uid ?? "");
         isCopied = true;
+        setTimeout(() => {
+          isCopied = false;
+        }, 4000);
       }}
     >
       {shortText($user?.uid ?? "", 8)}

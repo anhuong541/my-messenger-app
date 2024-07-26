@@ -1,5 +1,6 @@
 <script lang="ts">
   import defaultImg from "$lib/assets/default-avatar.webp";
+  import groupPeople from "$lib/assets/group-people.jpg";
 
   import dayjs from "dayjs";
   import Icon from "@iconify/svelte";
@@ -7,16 +8,20 @@
   import { collectionStore } from "sveltefire";
   import { onMount } from "svelte";
 
-  import AddFriendModal from "../../Modals/AddFriendModal.svelte";
   import { firestore, user } from "$lib/utils/firebase";
   import { friendSelected, userInfo, usersList } from "$lib/utils/dataStore";
-  import { selectedChatroomId } from "$lib/utils/store";
-  import FriendRequestModal from "$lib/components/Modals/FriendRequestModal.svelte";
-  import FriendDropdownOption from "$lib/components/Dropdown/FriendDropdownOption.svelte";
+  import { onTypeMessageChat, selectedChatroomId } from "$lib/utils/store";
+  import { FriendDropdownOption } from "$lib/components/Dropdown";
+  import {
+    AddGroupModal,
+    FriendRequestModal,
+    AddFriendModal,
+  } from "$lib/components/Modals";
 
-  let chooseTypeFriendList: "personal" | "groups" = "personal";
+  let chooseTypeFriendList: "personal" | "groups" = $onTypeMessageChat;
   let openAddFriendModal: boolean = false;
   let openFriendRequestModal: boolean = false;
+  let openAddGroupModal: boolean = false;
 
   let fetchFriendsList;
   let fetchFriendsRequestList;
@@ -24,10 +29,19 @@
   let friendsList: any = [];
   let isFetchedFriendsListData = false;
   let collectionUser;
+  let collectionChatGroup;
+
   let friendDropdownIndex: number | null = null;
 
   $: friendsRequestList =
     ($fetchFriendsRequestList && $fetchFriendsRequestList) ?? [];
+
+  $: groupsList =
+    $collectionChatGroup &&
+    $user &&
+    $collectionChatGroup?.filter((item: any) =>
+      item.member.map((item: any) => item.uid).includes($user.uid)
+    );
 
   $: {
     if ($fetchFriendsList && $collectionUser) {
@@ -64,8 +78,11 @@
     }
   }
 
+  $: console.log({ groupsList });
+
   onMount(() => {
     collectionUser = collectionStore(firestore, "users");
+    collectionChatGroup = collectionStore(firestore, "chat_groups");
   });
 
   $: {
@@ -76,11 +93,8 @@
 
   $: {
     if ($user && $usersList) {
-      const res = $usersList.find((item: any) => item?.uid === $user.uid);
-      if (res) {
-        const { id, uid, username, date, gender, online, email } = res;
-        userInfo.set({ id, uid, username, date, gender, online, email });
-      }
+      const res: any = $usersList.find((item: any) => item?.uid === $user.uid);
+      userInfo.set(res);
     }
   }
 
@@ -96,7 +110,7 @@
         on:click={() => (openFriendRequestModal = !openFriendRequestModal)}
       >
         <Icon
-          icon="material-symbols:person-add-outline-rounded"
+          icon="material-symbols:person-alert-outline"
           class="h-6 w-6 m-auto"
         />
         {#if friendsRequestList?.length > 0}
@@ -110,7 +124,16 @@
         on:click={() => (openAddFriendModal = !openAddFriendModal)}
       >
         <Icon
-          icon="material-symbols:person-search-outline-rounded"
+          icon="material-symbols:person-add-outline-rounded"
+          class="h-6 w-6 m-auto"
+        />
+      </button>
+      <button
+        class="rounded-full w-10 h-10 bg-primaryColor-100"
+        on:click={() => (openAddGroupModal = !openAddGroupModal)}
+      >
+        <Icon
+          icon="material-symbols:group-add-outline"
           class="h-6 w-6 m-auto"
         />
       </button>
@@ -192,21 +215,25 @@
           </div>
         {/each}
       {:else}
-        {#each [{}] as request}
+        {#each groupsList ?? [] as group}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
-            class={`flex items-center gap-2 w-full px-2 py-3 hover:bg-primaryColor-200 active:bg-primaryColor-100 rounded-md cursor-pointer`}
+            class="flex items-center gap-2 w-full px-2 py-3 hover:bg-primaryColor-200 active:bg-primaryColor-100 rounded-md cursor-pointer"
+            on:click={() => {}}
           >
             <!-- ${$selectedChatroomId === request?.chatRoomId ? "bg-primaryColor-200" : ""} -->
             <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />
             <div class="flex flex-col justify-center w-full overflow-hidden">
-              <h4>{request?.username ?? "Room Name!!!"}</h4>
+              <h4>{group?.groupName ?? "Room Name!!!"}</h4>
               <p
                 class="text-sm text-primaryColor-600 overflow-hidden text-ellipsis whitespace-nowrap"
               >
                 <!-- {request.email} --> last messages...
               </p>
               <div class="flex justify-between w-full gap-1 text-sm">
-                <p class="text-gray-500">21 People</p>
+                <p class="text-gray-500">
+                  {group?.members?.length ?? 0} People
+                </p>
                 <p class="text-primaryColor-500 text-xs">
                   <!-- {dayjs(request.lastTimeMsg).format("DD-MM")} -->
                   21 - 3
@@ -230,6 +257,8 @@
   bind:openModal={openFriendRequestModal}
   {friendsRequestList}
 />
+
+<AddGroupModal bind:openModal={openAddGroupModal} {friendsList} />
 
 <style>
 </style>

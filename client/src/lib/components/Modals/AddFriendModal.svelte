@@ -6,7 +6,7 @@
   import Button from "../Widget/Button.svelte";
   import { firestore, user } from "$lib/utils/firebase";
 
-  export let openModal = true;
+  export let openModal = false;
   export let usersData;
   export let friendsList;
 

@@ -42,14 +42,9 @@ export function onCopyText(text: string) {
     console.error("Clipboard API not supported");
     return;
   }
-  navigator.clipboard
-    .writeText(text)
-    .then(() => {
-      console.log("Text copied to clipboard");
-    })
-    .catch((err) => {
-      console.error("Failed to copy text: ", err);
-    });
+  navigator.clipboard.writeText(text).catch((err) => {
+    console.error("Failed to copy text: ", err);
+  });
 }
 
 export function shortText(text: string, characterNum: number) {

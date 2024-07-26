@@ -68,20 +68,6 @@
   <div class="flex flex-col gap-4">
     <label for="search-friends" class="relative">
       <Icon
-        icon="material-symbols:search-rounded"
-        class="absolute top-[50%] left-4 -translate-y-1/2 w-6 h-6"
-      />
-      <Input
-        type="text"
-        id="search"
-        name="search"
-        bind:value={searchUser}
-        placeholder="Search there name"
-        class="border py-3 px-6 pl-12 rounded-xl w-full"
-      />
-    </label>
-    <label for="search-friends" class="relative">
-      <Icon
         icon="material-symbols:groups-outline"
         class="absolute top-[50%] left-4 -translate-y-1/2 w-6 h-6"
       />
@@ -91,6 +77,20 @@
         name="search"
         bind:value={groupName}
         placeholder="Name Group"
+        class="border py-3 px-6 pl-12 rounded-xl w-full"
+      />
+    </label>
+    <label for="search-friends" class="relative">
+      <Icon
+        icon="material-symbols:search-rounded"
+        class="absolute top-[50%] left-4 -translate-y-1/2 w-6 h-6"
+      />
+      <Input
+        type="text"
+        id="search"
+        name="search"
+        bind:value={searchUser}
+        placeholder="Search there name"
         class="border py-3 px-6 pl-12 rounded-xl w-full"
       />
     </label>
@@ -123,7 +123,7 @@
                 on:click={() => removeMember(member)}
               >
                 <Icon
-                  icon="material-symbols:person-remove-outline-rounded"
+                  icon="material-symbols:group-remove-outline-rounded"
                   class="h-6 w-6 m-auto"
                 />
               </button>
@@ -160,7 +160,7 @@
                 on:click={() => selectMember(friend)}
               >
                 <Icon
-                  icon="material-symbols:person-check-outline-rounded"
+                  icon="material-symbols:group-add-outline-rounded"
                   class="h-6 w-6 m-auto"
                 />
               </button>
@@ -175,5 +175,5 @@
     <div class="flex justify-end items-center gap-4">
       <Button on:click={creatGroupChat}>Create Group</Button>
     </div>
-  </div></Modal
->
+  </div>
+</Modal>

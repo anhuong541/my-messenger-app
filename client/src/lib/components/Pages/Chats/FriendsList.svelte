@@ -173,7 +173,7 @@
     </label>
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
-      class="flex flex-col gap-2 px-2"
+      class="flex flex-col gap-2 px-2 h-[70vh] overflow-y-auto"
       on:mouseleave={() => (friendDropdownIndex = null)}
     >
       {#if chooseTypeFriendList === "personal"}

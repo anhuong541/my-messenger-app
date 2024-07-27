@@ -1,11 +1,12 @@
 <script>
   import Icon from "@iconify/svelte";
-  import { collection, deleteDoc, doc } from "firebase/firestore";
+  import { collection, deleteDoc, doc, setDoc } from "firebase/firestore";
   import { Dropdown, DropdownItem } from "flowbite-svelte";
 
   import { friendSelected } from "$lib/utils/dataStore";
   import { firestore, user } from "$lib/utils/firebase";
   import { selectedChatroomId } from "$lib/utils/store";
+  import { generateChatRoomId } from "$lib/utils";
 
   export let showDropdown = false;
   export let friend;
@@ -33,9 +34,14 @@
   const onDeleteMessage = async () => {
     if ($user) {
       const chatRoomCol = collection(firestore, "chat_rooms");
-      selectedChatroomId.set("");
+      const userSelect = collection(firestore, "users", $user.uid, "friends");
+      const newChatRoomId = generateChatRoomId();
+      await setDoc(doc(userSelect, friend?.uid), {
+        chatRoomId: newChatRoomId,
+      });
       await deleteDoc(doc(chatRoomCol, friend?.chatRoomId));
       showDropdown = false;
+      selectedChatroomId.set(newChatRoomId);
     }
   };
 

@@ -224,7 +224,6 @@
           <div
             class="flex items-center gap-2 w-full px-2 py-3 hover:bg-primaryColor-200 active:bg-primaryColor-100 rounded-md cursor-pointer"
             on:click={() => {
-              console.log({ group });
               selectedChatroomId.set(group?.chatGroupId);
               friendSelected.set({ type: "group", ...group });
             }}

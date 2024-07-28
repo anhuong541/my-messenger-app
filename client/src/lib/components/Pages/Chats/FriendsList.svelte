@@ -187,7 +187,7 @@
               class="flex items-center gap-2 w-full px-2 py-3 active:bg-primaryColor-100"
               on:click={() => {
                 selectedChatroomId.set(friend.chatRoomId);
-                friendSelected.set(friend);
+                friendSelected.set({ type: "person", ...friend });
               }}
               on:mouseenter={() => (friendDropdownIndex = index)}
             >
@@ -223,10 +223,14 @@
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
             class="flex items-center gap-2 w-full px-2 py-3 hover:bg-primaryColor-200 active:bg-primaryColor-100 rounded-md cursor-pointer"
-            on:click={() => selectedChatroomId.set(group?.chatGroupId)}
+            on:click={() => {
+              console.log({ group });
+              selectedChatroomId.set(group?.chatGroupId);
+              friendSelected.set({ type: "group", ...group });
+            }}
           >
             <!-- ${$selectedChatroomId === request?.chatRoomId ? "bg-primaryColor-200" : ""} -->
-            <Avatar src={defaultImg} class="h-12 w-12 rounded-full" />
+            <Avatar src={groupPeople} class="h-12 w-12 rounded-full" />
             <div class="flex flex-col justify-center w-full overflow-hidden">
               <h4>{group?.groupName ?? "Room Name!!!"}</h4>
               <p

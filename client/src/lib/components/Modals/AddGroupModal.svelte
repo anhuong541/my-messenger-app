@@ -60,8 +60,8 @@
   //   $: userFilterd = usersData.find((item: any) => item?.uid === uidTyped);
   //   $: isUser = $user?.uid === userFilterd?.uid ?? false;
 
-  $: console.log({ formatFriendsList, friendsList });
-  $: console.log({ memberList });
+  // $: console.log({ formatFriendsList, friendsList });
+  // $: console.log({ memberList });
 </script>
 
 <Modal title="Create New Group Chat" bind:open={openModal}>

@@ -9,6 +9,7 @@
   import { firestore, user } from "$lib/utils/firebase";
   import { generateChatRoomId, triggerToast } from "$lib/utils";
   import { userInfo } from "$lib/utils/dataStore";
+  import IconButton from "../Widget/IconButton.svelte";
 
   export let openModal = false;
   export let friendsList: any[];
@@ -56,9 +57,6 @@
   $: formatFriendsList = friendsList.filter((person: any) =>
     person.username.toLowerCase().includes(searchUser.toLowerCase())
   );
-
-  //   $: userFilterd = usersData.find((item: any) => item?.uid === uidTyped);
-  //   $: isUser = $user?.uid === userFilterd?.uid ?? false;
 
   // $: console.log({ formatFriendsList, friendsList });
   // $: console.log({ memberList });
@@ -118,15 +116,11 @@
                   {member.email}
                 </p>
               </div>
-              <button
-                class="rounded-full flex-shrink-0 w-10 h-10 bg-primaryColor-100"
+              <IconButton
+                btnClass="rounded-full flex-shrink-0 w-10 h-10 bg-primaryColor-100"
+                icon="material-symbols:group-remove-outline-rounded"
                 on:click={() => removeMember(member)}
-              >
-                <Icon
-                  icon="material-symbols:group-remove-outline-rounded"
-                  class="h-6 w-6 m-auto"
-                />
-              </button>
+              />
             </div>
           {/each}
         </div>

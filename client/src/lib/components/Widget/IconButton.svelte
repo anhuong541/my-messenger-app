@@ -3,7 +3,7 @@
 
   export let icon;
   export let type: "button" | "submit" | "reset" = "button";
-  export let labelBtn: string;
+  export let labelBtn: string = "";
   export let btnClass: string =
     "rounded-full flex-shrink-0 w-10 h-10 bg-primaryColor-100";
   export let iconClass: string = "h-6 w-6 m-auto";
@@ -11,12 +11,12 @@
 
 <button
   class={btnClass}
+  {type}
   on:click
   on:mouseover
   on:mouseenter
   on:mouseleave
   on:focus
-  {type}
 >
   {labelBtn}
   <Icon {icon} class={iconClass} />

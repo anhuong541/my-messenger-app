@@ -21,21 +21,21 @@
   <div class="flex justify-between items-center border-b px-4 min-h-[70px]">
     <div class="flex items-center gap-2">
       <Avatar
-        src={$friendSelected && $friendSelected.type === "person"
+        src={$friendSelected && $friendSelected?.type === "person"
           ? defaultAvatar
           : groupPeople}
         class="h-12 w-12 rounded-full"
       />
       <div class="flex flex-col">
         <h4 class="font-medium">
-          {#if $friendSelected.type === "person"}
+          {#if $friendSelected?.type === "person"}
             {$friendSelected?.username ?? ""}
           {:else}
             {$friendSelected?.groupName ?? ""}
           {/if}
         </h4>
         <p class="text-sm text-primaryColor-400">
-          {#if $friendSelected.type === "person"}
+          {#if $friendSelected?.type === "person"}
             {$friendSelected?.online ? "Online" : "Offline"}
           {:else}
             Active

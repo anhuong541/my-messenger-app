@@ -158,7 +158,7 @@
     </button>
   </div>
   <div class="flex flex-col gap-4 py-4 w-full">
-    <label for="search-friends" class="relative px-4">
+    <!-- <label for="search-friends" class="relative px-4">
       <Icon
         icon="material-symbols:search-rounded"
         class="absolute top-[50%] left-8 -translate-y-1/2 w-6 h-6"
@@ -170,7 +170,7 @@
         placeholder="Search"
         class="border py-3 px-6 pl-12 rounded-full w-full"
       />
-    </label>
+    </label> -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
       class="flex flex-col gap-2 px-2 h-[70vh] overflow-y-auto"
